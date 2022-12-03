@@ -1,0 +1,48 @@
+/* font-family: 'Alegreya Sans SC', sans-serif;
+font-family: 'Cinzel', serif;
+font-family: 'Raleway', sans-serif; */
+
+:root {
+
+    /*
+    Color palette
+    */
+        --primary: #000049;
+        --secondary: #C5801F;
+        --secondary_fade: #f4cc94;
+        --accent: #80021C;
+        --neutral: #D0D2D6;
+   
+
+    /*
+    Fonts
+    */
+
+      --font-title: 'Cinzel', serif;
+      --font-base: 'Alegreya Sans SC', sans-serif;
+      --font-text: 'Raleway', sans-serif;
+
+
+    /*
+     Gap
+     */
+      --gap-small: 15px;
+      --gap-norm: 25px;
+      --gap-big: 50px;
+
+
+    /*
+     Fonts size
+     */
+      --font-size-huger: 2.488rem;
+      --font-size-huge: 2.074rem;
+      --font-size-medium: 1.728rem;
+      --font-size-regular-plus: 1.44rem;
+      --font-size-regular: 1.25rem;
+      --font-size-small-plus: 1.15rem;
+      --font-size-small: 1rem;
+
+
+
+    }
+

@@ -1,0 +1,33 @@
+.link-svg{
+  display: flex;
+
+}
+.link-svg a{
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: var(--font-size-regular-plus);
+  margin: 15px 0 ;
+  cursor: pointer;
+  text-decoration: none;
+   transition: all 0.5s;
+}
+
+.link-svg_right{
+  justify-content: flex-end;
+}
+
+.link-svg svg{
+  width: 25px;
+  fill: black;
+  transition: fill 0.5s;
+}
+
+.link-svg a:hover, .link-svg svg:hover {
+  color: var(--accent);
+  fill: var(--accent);
+}
+
+.link-svg a:hover {
+text-decoration: underline 1px solid var(--accent);
+}

@@ -1,0 +1,20 @@
+.fast-bet{
+    border: 1px solid var(--secondary_fade);
+    border-radius: 10px;
+  
+}
+
+.fast-bet div{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.fast-bet .button{
+    margin: 0;
+}
+
+.fast-bet::backdrop{
+    background: rgba(0, 0, 0, 0.3)
+}

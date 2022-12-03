@@ -1,0 +1,159 @@
+/*Grid de base*/
+
+.grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--gap-norm);
+}
+
+/*Format grid*/
+
+
+.grid .card a>h4{
+  margin: 15px;
+}
+
+.grid .info-btn{
+  margin: 15px;
+}
+
+.grid img{
+ height: 50%;
+  /* width: 50%; */
+  max-width: 200px;
+}
+
+.grid .img-name h4{
+  text-align: center;
+}
+
+
+
+
+/*Format liste*/
+
+.list .card+.card{
+  margin: 25px 0;
+}
+
+
+.list .card .content{
+  flex-direction: row;
+  gap: 25px;
+  justify-content: space-between;
+}
+
+.list .card .content h4{
+  font-size: var(--font-size-medium);
+}
+
+.list .card .info-btn{
+  flex-direction: column;
+  flex-grow: 0;
+}
+
+.grid .card .info-btn{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+
+  gap: 10px;
+}
+
+.list .img-name a{
+  display: flex;
+  gap: 15px;
+}
+
+
+.list img{
+  max-width: 150px;
+}
+
+.list .info{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 0;
+  text-align: end;
+
+}
+
+.list .info-btn{
+  display: flex;
+  flex-shrink: 0;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.list .button{
+  margin: 0;
+}
+
+ .list .card>*:not(:first-child){
+  margin: 15px;
+}
+
+.list .card a>h4, .list .card img{
+  margin: 0;
+}
+
+
+@media screen and (max-width: 900px) {
+  
+  .list .card .content{
+    flex-direction: column;
+  }
+  
+  .list .card .img-name a{
+  border-bottom: 1px solid var(--secondary_fade);
+  }
+
+  .list img{
+    width: 35%;
+    max-width: 200px;
+  }
+
+  .list .card .content h4{
+    font-size: var(--font-size-regular-plus);
+  }
+
+  .list .card .info-btn{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+  margin: 15px;
+}
+
+.list .card .info{
+  text-align: start;
+}
+
+.list .img-name a{
+  padding-bottom: 15px;
+}
+}
+
+@media screen and (max-width: 450px) {
+
+  .grid .card .info-btn, .list .card .info-btn{
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .grid .card .info, .list .card .info{
+    text-align: center;
+  }
+
+  .list img{
+    width: 50%;
+    height: 50%;
+  }
+  
+}
+
+@media screen and (max-width: 375px) {
+  .grid{grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));}
+}

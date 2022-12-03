@@ -9,10 +9,11 @@
 class Routeur {
 
   private $routes = [
-    ["admin",         "Admin",    "gererAdmin"],
-    ["",              "Frontend", "listerAlaffiche"],
-    ["prochainement", "Frontend", "listerProchainement"],
-    ["film",          "Frontend", "voirFilm"]
+    ["",              "Frontend", "afficherAccueil"],
+   // ["inscription",   "User", "addUser"],
+    // ["admin",         "Admin",    "gererAdmin"],
+    // ["prochainement", "Frontend", "listerProchainement"],
+    // ["film",          "Frontend", "voirFilm"]
   ];
 
   protected $oRequetesSQL; 

@@ -8,19 +8,19 @@ class Admin extends Routeur {
 
   private $entite;
   private $action;
-  private $utilisateur_id;
+  private $user_id;
 
-  private $oUtilisateur;
+  private $oUser;
 
   private $methodes = [
-    'utilisateur' => [
-      'l' => ['nom'=>'listerUtilisateurs', 'droits'=>[Utilisateur::PROFIL_ADMINISTRATEUR]],
-      'a' => ['nom'=>'ajouterUtilisateur', 'droits'=>[Utilisateur::PROFIL_ADMINISTRATEUR]],
-      'm' => ['nom'=>'modifierUtilisateur', 'droits'=>[Utilisateur::PROFIL_ADMINISTRATEUR]],
-      's' => ['nom'=>'supprimerUtilisateur', 'droits'=>[Utilisateur::PROFIL_ADMINISTRATEUR]],
-      'gf'=> ['nom'=>'gestionFilms', 'droits'=>[Utilisateur::PROFIL_ADMINISTRATEUR, Utilisateur::PROFIL_EDITEUR]],
+    'user' => [
+      //'l' => ['nom'=>'listerUsers', 'droits'=>[User::PROFIL_ADMINISTRATEUR]],
+      'a' => ['nom'=>'ajouterUser', 'droits'=>[User::PROFIL_ADMINISTRATEUR]],
+      'm' => ['nom'=>'modifierUser', 'droits'=>[User::PROFIL_ADMINISTRATEUR]],
+      's' => ['nom'=>'supprimerUser', 'droits'=>[User::PROFIL_ADMINISTRATEUR]],
+      //'gf'=> ['nom'=>'gestionFilms', 'droits'=>[User::PROFIL_ADMINISTRATEUR, User::PROFIL_EDITEUR]],
       'd' => ['nom'=>'deconnecter'],
-      'mmdp' => ['nom'=>'modificationMDP', 'droits'=>[Utilisateur::PROFIL_ADMINISTRATEUR]],
+      //'mmdp' => ['nom'=>'modificationMDP', 'droits'=>[User::PROFIL_ADMINISTRATEUR]],
     ]
   ];
     
@@ -32,9 +32,9 @@ class Admin extends Routeur {
    * Constructeur qui initialise le contexte du contrôleur  
    */  
   public function __construct() {
-    $this->entite    = $_GET['entite']    ?? 'utilisateur';
+    $this->entite    = $_GET['entite']    ?? 'user';
     $this->action    = $_GET['action']    ?? 'l';
-    $this->utilisateur_id = $_GET['utilisateur_id'] ?? null;
+    $this->user_id = $_GET['user_id'] ?? null;
     $this->film_id  = $_GET['film_id']  ?? null;
     $this->oRequetesSQL = new RequetesSQL;
   }
@@ -43,15 +43,15 @@ class Admin extends Routeur {
    * Gérer l'interface d'administration 
    */  
   public function gererAdmin() {
-    if (isset($_SESSION['oUtilisateur'])) {
-      $this->oUtilisateur = $_SESSION['oUtilisateur'];
+    if (isset($_SESSION['oUser'])) {
+      $this->oUser = $_SESSION['oUser'];
       if (isset($this->methodes[$this->entite])) {
         if (isset($this->methodes[$this->entite][$this->action])) {
           $methode = $this->methodes[$this->entite][$this->action]['nom'];
           if(isset($this->methodes[$this->entite][$this->action]['droits'])){
             $droits = $this->methodes[$this->entite][$this->action]['droits'];
             foreach ($droits as $value) {
-              if($value === $this->oUtilisateur->utilisateur_profil){
+              if($value === $this->oUser->user_profil){
                 $this->$methode();
                 exit;
               }
@@ -73,25 +73,21 @@ class Admin extends Routeur {
   }
 
   /**
-   * Connecter un utilisateur
+   * Connecter un user
    */
   public function connecter() {
     $messageErreurConnexion = ""; 
     if (count($_POST) !== 0) {
-      $utilisateur = $this->oRequetesSQL->connecter($_POST);
-      if ($utilisateur !== false) {
-        $_SESSION['oUtilisateur'] = new Utilisateur($utilisateur);
-        $this->oUtilisateur = $_SESSION['oUtilisateur'];
-        if($this->oUtilisateur->utilisateur_profil == Utilisateur::PROFIL_UTILISATEUR) throw new Exception(Routeur::FORBIDDEN);
-        if($this->oUtilisateur->utilisateur_profil == Utilisateur::PROFIL_EDITEUR) $this-> gestionFilms();
-        if($this->oUtilisateur->utilisateur_profil == Utilisateur::PROFIL_ADMINISTRATEUR) $this->listerUtilisateurs();
-        exit;         
+      $user = $this->oRequetesSQL->connecter($_POST);
+      if ($user !== false) {
+        $_SESSION['oUser'] = new User($user);
+        $this->oUser = $_SESSION['oUser'];
       } else {
         $messageErreurConnexion = "Courriel ou mot de passe incorrect.";
       }
     }
     
-    (new Vue)->generer('vAdminUtilisateurConnecter',
+    (new Vue)->generer('vAdminUserConnecter',
             array(
               'titre'                  => 'Connexion',
               'messageErreurConnexion' => $messageErreurConnexion
@@ -100,10 +96,10 @@ class Admin extends Routeur {
   }
 
   /**
-   * Déconnecter un utilisateur
+   * Déconnecter un user
    */
   public function deconnecter() {
-    unset ($_SESSION['oUtilisateur']);
+    unset ($_SESSION['oUser']);
     $this->connecter();
   }
 
@@ -113,27 +109,27 @@ class Admin extends Routeur {
    */
   public function modificationMDP() {
 
-    $oUtilisateur = new Utilisateur(["utilisateur_id"=>$this->utilisateur_id]);
-    $oUtilisateur->genererMdp();
+    $oUser = new User(["user_id"=>$this->user_id]);
+    $oUser->genererMdp();
 
-    if ($this->oRequetesSQL->modificationMDP(['utilisateur_id'=> $oUtilisateur->utilisateur_id, 'utilisateur_mdp'=> $oUtilisateur->utilisateur_mdp])) {
+    if ($this->oRequetesSQL->modificationMDP(['user_id'=> $oUser->user_id, 'user_mdp'=> $oUser->user_mdp])) {
        
-       $newMDP= $oUtilisateur->utilisateur_mdp;
+       $newMDP= $oUser->user_mdp;
        
-       $oUtilisateur = $this->oRequetesSQL->getUtilisateur($this->utilisateur_id);
-       $oUtilisateur["utilisateur_mdp"] = $newMDP;
+       $oUser = $this->oRequetesSQL->getUser($this->user_id);
+       $oUser["user_mdp"] = $newMDP;
 
-       $retour = (new GestionCourriel)->envoyerMdp($oUtilisateur);
+       $retour = (new GestionCourriel)->envoyerMdp($oUser);
        
-       $this->messageRetourAction = "Modification du mot de passe de l'utilisateur numéro $this->utilisateur_id effectuée. Courriel envoyé à ". $oUtilisateur["utilisateur_courriel"]. ".<br>";
+       $this->messageRetourAction = "Modification du mot de passe de l'user numéro $this->user_id effectuée. Courriel envoyé à ". $oUser["user_courriel"]. ".<br>";
        if (ENV === "DEV")  $this->messageRetourAction .= "<a href=\"$retour\">Message dans le fichier $retour</a>";
        
     } else {
       $this->classRetour = "erreur";
-      $this->messageRetourAction = "Modification du mot de passe de l'utilisateur numéro $this->utilisateur_id non effectuée.";
+      $this->messageRetourAction = "Modification du mot de passe de l'user numéro $this->user_id non effectuée.";
     }
     
-    $this->listerUtilisateurs();
+    $this->listerUsers();
 
     
   }
@@ -141,17 +137,17 @@ class Admin extends Routeur {
 
 
   /**
-   * Lister les utilisateurs
+   * Lister les users
    */
-  public function listerUtilisateurs() {
+  public function listerUsers() {
 
-    $utilisateurs = $this->oRequetesSQL->getUtilisateurs();
+    $users = $this->oRequetesSQL->getUsers();
 
-    (new Vue)->generer('vAdminUtilisateurs',
+    (new Vue)->generer('vAdminUsers',
             array(
-              'oUtilisateur'        => $this->oUtilisateur,
-              'titre'               => 'Gestion des utilisateurs',
-              'utilisateurs'        => $utilisateurs,
+              'oUser'        => $this->oUser,
+              'titre'               => 'Gestion des users',
+              'users'        => $users,
               'classRetour'         => $this->classRetour, 
               'messageRetourAction' => $this->messageRetourAction
             ),
@@ -159,98 +155,98 @@ class Admin extends Routeur {
   }
 
   /**
-   * Ajouter un utilisateur
+   * Ajouter un user
    */
-  public function ajouterUtilisateur() {
-    $utilisateur  = [];
+  public function ajouterUser() {
+    $user  = [];
     $erreurs = [];
     if (count($_POST) !== 0) {
-      $utilisateur = $_POST;
-      $oUtilisateur = new Utilisateur($utilisateur); 
-      $erreurs = $oUtilisateur->erreurs;
+      $user = $_POST;
+      $oUser = new User($user); 
+      $erreurs = $oUser->erreurs;
       if (count($erreurs) === 0) { 
-        $oUtilisateur->genererMdp();
-        $utilisateur_id = $this->oRequetesSQL->ajouterUtilisateur([
-          'utilisateur_nom'    => $oUtilisateur->utilisateur_nom,
-          'utilisateur_prenom' => $oUtilisateur->utilisateur_prenom,
-          'utilisateur_courriel' => $oUtilisateur->utilisateur_courriel,
-          'utilisateur_profil' => $oUtilisateur->utilisateur_profil,
-          'utilisateur_mdp' => $oUtilisateur->utilisateur_mdp
+        $oUser->genererMdp();
+        $user_id = $this->oRequetesSQL->ajouterUser([
+          'user_nom'    => $oUser->user_nom,
+          'user_prenom' => $oUser->user_prenom,
+          'user_courriel' => $oUser->user_courriel,
+          'user_profil' => $oUser->user_profil,
+          'user_mdp' => $oUser->user_mdp
         ]);
-        if ( $utilisateur_id > 0) { 
-          $retour = (new GestionCourriel)->envoyerMdp($oUtilisateur);
-          $this->messageRetourAction = "Ajout de l'utilisateur numéro $utilisateur_id effectuée. Courriel envoyé à " . $oUtilisateur->utilisateur_courriel. ".<br>";
+        if ( $user_id > 0) { 
+          $retour = (new GestionCourriel)->envoyerMdp($oUser);
+          $this->messageRetourAction = "Ajout de l'user numéro $user_id effectuée. Courriel envoyé à " . $oUser->user_courriel. ".<br>";
           if (ENV === "DEV")  $this->messageRetourAction .= "<a href=\"$retour\">Message dans le fichier $retour</a>";
         } else {
           $this->classRetour = "erreur";
-          $this->messageRetourAction = "Ajout de l'utilisateur non effectué.";
+          $this->messageRetourAction = "Ajout de l'user non effectué.";
         }
-        $this->listerUtilisateurs(); 
+        $this->listerUsers(); 
         exit;
       }
     }
     
-    (new Vue)->generer('vAdminUtilisateurAjouter',
+    (new Vue)->generer('vAdminUserAjouter',
             array(
-              'oUtilisateur' => $this->oUtilisateur,
-              'titre'        => 'Ajouter un utilisateur',
-              'utilisateur'  => $utilisateur,
+              'oUser' => $this->oUser,
+              'titre'        => 'Ajouter un user',
+              'user'  => $user,
               'erreurs'      => $erreurs
             ),
             'gabarit-admin');
   }
 
   /**
-   * Modifier un utilisateur identifié par sa clé dans la propriété utilisateur_id
+   * Modifier un user identifié par sa clé dans la propriété user_id
    */
-  public function modifierUtilisateur() {
+  public function modifierUser() {
     if (count($_POST) !== 0) {
-      $utilisateur = $_POST;
-      $oUtilisateur = new Utilisateur($utilisateur);
-      $erreurs = $oUtilisateur->erreurs;
+      $user = $_POST;
+      $oUser = new User($user);
+      $erreurs = $oUser->erreurs;
       if (count($erreurs) === 0) {
-        if($this->oRequetesSQL->modifierUtilisateur([
-          'utilisateur_id'     => $oUtilisateur->utilisateur_id,
-          'utilisateur_nom'    => $oUtilisateur->utilisateur_nom,
-          'utilisateur_prenom' => $oUtilisateur->utilisateur_prenom,
-          'utilisateur_courriel' => $oUtilisateur->utilisateur_courriel,
-          'utilisateur_profil' => $oUtilisateur->utilisateur_profil
+        if($this->oRequetesSQL->modifierUser([
+          'user_id'     => $oUser->user_id,
+          'user_nom'    => $oUser->user_nom,
+          'user_prenom' => $oUser->user_prenom,
+          'user_courriel' => $oUser->user_courriel,
+          'user_profil' => $oUser->user_profil
         ])) {
-          $this->messageRetourAction = "Modification de l'utilisateur numéro $this->utilisateur_id effectuée.";
+          $this->messageRetourAction = "Modification de l'user numéro $this->user_id effectuée.";
         } else {
           $this->classRetour = "erreur";
-          $this->messageRetourAction = "modification de l'utilisateur numéro $this->utilisateur_id non effectuée.";
+          $this->messageRetourAction = "modification de l'user numéro $this->user_id non effectuée.";
         }
-        $this->listerUtilisateurs();
+        $this->listerUsers();
         exit;
       }
 
     } else {
-      $utilisateur  = $this->oRequetesSQL->getUtilisateur($this->utilisateur_id);
+      $user  = $this->oRequetesSQL->getUser($this->user_id);
       $erreurs = [];
     }
     
-    (new Vue)->generer('vAdminUtilisateurModifier',
+    (new Vue)->generer('vAdminUserModifier',
             array(
-              'oUtilisateur' => $this->oUtilisateur,
-              'titre'        => "Modifier l'utilisateur numéro $this->utilisateur_id",
-              'utilisateur'  => $utilisateur,
+              'oUser' => $this->oUser,
+              'titre'        => "Modifier l'user numéro $this->user_id",
+              'user'  => $user,
               'erreurs'      => $erreurs
             ),
             'gabarit-admin');
   }
   
   /**
-   * Supprimer un utilisateur identifié par sa clé dans la propriété utilisateur_id
+   * Supprimer un user identifié par sa clé dans la propriété user_id
    */
-  public function supprimerUtilisateur() {
-    if ($this->oRequetesSQL->supprimerUtilisateur($this->utilisateur_id)) {
-      $this->messageRetourAction = "Suppression de l'utilisateur numéro $this->utilisateur_id effectuée.";
+  public function supprimerUser() {
+    if ($this->oRequetesSQL->supprimerUser($this->user_id)) {
+      $this->messageRetourAction = "Suppression de l'user numéro $this->user_id effectuée.";
     } else {
       $this->classRetour = "erreur";
-      $this->messageRetourAction = "Suppression de l'utilisateur numéro $this->utilisateur_id non effectuée.";
+      $this->messageRetourAction = "Suppression de l'user numéro $this->user_id non effectuée.";
     }
-    $this->listerUtilisateurs();
+    $this->listerUsers();
   }
 
   
@@ -259,9 +255,9 @@ class Admin extends Routeur {
    */
   public function gestionFilms() {
    
-    (new Vue)->generer('vAdminUtilisateurs',
+    (new Vue)->generer('vAdminUsers',
             array(
-              'oUtilisateur'        => $this->oUtilisateur,
+              'oUser'        => $this->oUser,
               'titre'               => 'Gestion des films',
               'messageRetourAction' => "Développement en cours"
             ),

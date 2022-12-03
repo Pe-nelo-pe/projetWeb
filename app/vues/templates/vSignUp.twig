@@ -1,0 +1,41 @@
+<section>
+  <h1>{{ titre|upper }}</h1>
+  <p class="messageRetourAction {{ classRetour }}">{{ messageRetourAction|raw}}&nbsp;</p>   
+  
+  <form method="POST" action="user?entite=user&action=a">
+
+    <label>Prénom</label>
+    <input type="text" name="user_prenom" value="{{ users.user_prenom }}">
+    <span>&nbsp;{{ erreurs.user_prenom }}</span>
+
+    <label>Nom</label>
+    <input type="text" name="user_lastName" value="{{ users.user_lastName }}">
+    <span>&nbsp;{{ erreurs.user_lastName }}</span>
+
+
+    <label>Courriel</label>
+    <input type="email" name="user_courriel" value="{{ users.user_courriel }}">
+    <span>&nbsp;{{ erreurs.user_courriel }}</span>
+
+    <label>Mot de passe</label>
+    <input type="password" name="user_password" value="{{ users.user_password }}">
+    <span>&nbsp;{{ erreurs.user_password }}</span>
+
+    <label>Adresse</label>
+    <input type="text" name="user_address" value="{{ users.user_address }}">
+    <span>&nbsp;{{ erreurs.user_address}}</span>
+
+    <label>Ville</label>
+    <input type="text" name="user_city" value="{{ users.user_city }}">
+    <span>&nbsp;{{ erreurs.user_city }}</span>
+
+    <label>Code postal</label>
+    <input type="text" name="user_zipCode" value="{{ users.user_zipCode }}">
+    <span>&nbsp;{{ erreurs.user_zipCode }}</span>
+
+
+
+    <input type="submit" value="Envoyer">
+
+  </form>
+</section>

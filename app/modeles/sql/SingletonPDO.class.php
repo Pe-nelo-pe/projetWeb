@@ -5,7 +5,7 @@ class SingletonPDO extends PDO
     private static $instance = null;
 
     const DB_SERVEUR  = 'localhost';
-    const DB_NOM      = 'cinema';
+    const DB_NOM      = 'projetweb';
     const DB_DSN      = 'mysql:host='. self::DB_SERVEUR .';dbname='. self::DB_NOM.';charset=utf8'; 
     const DB_LOGIN    = 'root';
     const DB_PASSWORD = '';

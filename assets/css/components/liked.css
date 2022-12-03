@@ -1,0 +1,33 @@
+.liked{
+  background-color: var(--neutral);
+  margin: 50px 0 0;
+  padding: 25px 50px 50px;
+}
+
+.liked .head h2{
+  margin: 0;
+}
+
+.liked .grid{
+  grid-template-columns: repeat(auto-fit, max(350px));
+
+}
+
+@media screen and (max-width: 850px) {
+  .liked{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .liked .head h2{
+    margin: auto;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .liked .grid{
+  grid-template-columns: repeat(auto-fit, max(250px));
+
+}
+}

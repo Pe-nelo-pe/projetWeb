@@ -1,0 +1,23 @@
+
+@import "./general.css";
+@import "./theme.css";
+
+
+@import "./components/card.css";
+@import "./components/details.css";
+@import "./components/footer.css";
+@import "./components/guarantee.css";
+@import "./components/header.css";
+@import "./components/hero.css";
+@import "./components/img-text.css";
+@import "./components/liked.css";
+@import "./components/search.css";
+@import "./components/setting_display.css";
+
+
+@import "./elements/fast-bet.css";
+@import "./elements/buttons.css";
+@import "./elements/inputs.css";
+@import "./elements/grid-list.css";
+@import "./elements/btn-top.css";
+@import "./elements/link-svg.css";

@@ -1,0 +1,19 @@
+.guarantee{
+  margin-bottom: 50px;
+
+}
+
+.guarantee img{
+  width: 25%;
+  max-width: 200px;
+  object-fit: cover;
+  display: block;
+  margin: auto;
+}
+
+.guarantee h2{
+  font-family: var(--font-title);
+  font-size: var(--font-size-medium);
+  text-align: center;
+  margin-top: 0;
+}

@@ -1,0 +1,30 @@
+.setting_display{
+  display: flex;
+  justify-content: space-between;
+  margin: 0 50px;
+}
+
+.setting_display svg{
+  fill: var(--primary);
+  stroke: var(--primary);
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+
+.setting_display .filter, .setting_display .display{
+  display: flex;
+  gap: 20px;
+}
+
+.setting_display svg:hover{
+  fill: var(--accent);
+  stroke: var(--accent);
+ 
+}
+
+.setting_display .actived svg{
+  fill: var(--accent);
+  stroke: var(--accent);
+}

@@ -1,0 +1,33 @@
+
+.hero-ban{
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    min-height: 30vh;
+    background-color: grey;
+    color: #ffff;
+    text-align: center;
+    margin: 0;
+}
+
+.hero-ban img{
+    position: absolute;
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    opacity: .8;
+    mix-blend-mode: multiply;
+}
+
+
+.hero-ban div{
+    position: relative;
+    max-width: 70ch;
+    margin: 15px;
+}
+
+.hero-ban button{
+    margin-bottom: 35px;
+}

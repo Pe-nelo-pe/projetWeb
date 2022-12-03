@@ -14,7 +14,6 @@ class Utilisateur
   private $utilisateur_profil;
 
   const PROFIL_ADMINISTRATEUR = "administrateur";
-  const PROFIL_EDITEUR = "editeur";
   const PROFIL_UTILISATEUR = "utilisateur";
 
   private $erreurs = array();

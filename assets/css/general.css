@@ -1,0 +1,111 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    font-family: var(--font-base);
+    scroll-behavior: smooth;
+}
+
+h1, h2, h3, h4, h5, h6{
+     line-height: 1.1;
+}
+h1{
+    font-family: var(--font-title);
+    font-size: var(--font-size-huger);
+
+} 
+
+h2{
+    font-size: var(--font-size-huge);
+}
+
+h3{
+    font-size: var(--font-size-medium);
+}
+
+h4{
+    font-size: var(--font-size-regular-plus);
+    margin: 15px 0;
+}
+
+h5{
+    font-size: var(--font-size-regular);
+    margin: 15px 0;
+}
+h6{
+    display: none;
+}
+
+ul{
+    padding: 0;
+}
+
+li {
+    list-style: none;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+    transition: text-decoration .5s,
+                color .5s;
+    font-size: var(--font-size-regular-plus);
+    display: inline-block;
+}
+
+p{
+    font-family: var(--font-text);
+    font-size: var(--font-size-regular);
+    line-height: 1.9rem;
+}
+
+img{
+    max-width: 100%;
+}
+
+picture{
+    display: inline-block;
+}
+
+small{
+    font-size: var(--font-size-small);
+}
+svg{
+    fill: var(--secondary);
+}
+
+.hidden{
+    display: none;
+}
+
+main section {
+    margin: 0 var(--gap-big);
+}
+
+section .head{
+    display: inline-flex;
+    width: 100%;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin: 0 0 25px ;
+    gap: 15px;
+}
+
+section .head h2{
+    margin: 0;
+    border-bottom: 2px solid var(--secondary);
+}
+
+section .head a {
+     text-decoration: underline;
+    text-decoration-color: transparent;
+    transition: all .5s;
+}
+
+section .head  a:hover{
+    text-decoration: underline 1px solid var(--secondary);
+}
+
+main>div{
+    margin: 0 50px;
+}

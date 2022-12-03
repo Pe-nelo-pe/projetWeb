@@ -1,26 +1,181 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>{{ titre }}</title>
-  <link rel="stylesheet" type="text/css" href="css/frontend.css?v=1.2">
-  <link href="https://fonts.googleapis.com/css2?family=Sansita+Swashed&display=swap" rel="stylesheet">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="Site d'enchères de timbres.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@300;400;500;700;800&family=Cinzel:wght@400;500&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<script src="assets/js/main.js"></script>  
+<title>Enchères Stampee</title>
 </head>
-
 <body>
   <header>
-    <div id="logo">Le Méliès</div>
-    <nav>
-      <ul>
-        <li><a href=".">À l'affiche</a></li>
-        <li><a href="prochainement">Prochainement</a></li>
-      </ul>
+    <a href="#"><img class="logo" src="assets/imgs/icones/logo-blanc.svg" alt="Logo Enchères Stampee"></a>
+    <input  type="checkbox" aria-label="menu">
+    <div class="menu-ham"> 
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <nav class="nav-links">
+      
+        <div class="account">
+          <a href="user?entite=user&action=a" class="underline">S'inscrire</a>
+          <a href="#" class="underline">Connexion</a>
+        </div>
+        <div class="nav_p">
+
+          <details>
+            <summary>
+              <span>Enchères</span>
+            </summary>
+            <ul>
+              <li><a href="catalogue.html" class="underline">Actuelles</a></li>
+              <li><a href="#" class="underline">Archivées</a></li>
+            </ul>
+          </details>
+          <details>
+            <summary>
+              <span>Nouvelles</span>
+            </summary>
+            <ul>
+              <li><a href="#" class="underline">Timbres</a></li>
+              <li><a href="#" class="underline">Enchères</a></li>
+              <li><a href="#" class="underline">Bridge</a></li>
+            </ul>
+          </details>
+          <details>
+            <summary>
+              <span>Guides</span>
+            </summary>
+            <ul>
+              <li><a href="#" class="underline">Comment miser?</a></li>
+              <li><a href="#" class="underline">Le monde de la philatélie</a></li>
+            </ul>
+          </details>
+          <details>
+            <summary>
+              <span>Nos services</span>
+            </summary>
+            <ul>
+              <li><a href="#" class="underline">Vente</a></li>
+              <li><a href="#" class="underline">Évaluation</a></li>
+            </ul>
+          </details>
+          <details>
+
+            <summary>
+              <a href="#" class="last-a">À propos de Lord Reginald Stampee III</a>
+            </summary>
+          </details>
+      
+        </div>
     </nav>
   </header>
-  <main>
+
+  <main> 
+     <dialog class="fast-bet">
+      <p>Veuillez entrer votre mise</p>
+      <form method="dialog">
+        <p><input type="number"> $</p>
+        <div>
+          <button class="button" value="cancel">Annuler</button>
+          <button class="button" value="miser">Miser</button>
+        </div>
+      </form>
+    </dialog>
+    
+    <a class="btn-top" href="#" aria-label="Go back to top"><svg xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 512"><path fill-rule="nonzero" d="M170.86 294.91c-3.91 3.81-10.21 3.76-14.06-.11a9.788 9.788 0 0 1 .12-13.92l93.37-90.56c3.9-3.8 10.17-3.76 14.02.07l90.85 90.56a9.778 9.778 0 0 1-.04 13.92c-3.9 3.83-10.19 3.82-14.06-.04l-83.89-83.63-86.31 83.71zM256 19.94c-65.19 0-124.2 26.43-166.92 69.14C46.37 131.8 19.94 190.81 19.94 256c0 65.19 26.42 124.21 69.14 166.92 42.72 42.71 101.73 69.14 166.92 69.14 65.19 0 124.21-26.42 166.92-69.14 42.72-42.71 69.14-101.73 69.14-166.92 0-65.19-26.43-124.2-69.14-166.92C380.21 46.36 321.19 19.94 256 19.94zM74.98 74.98C121.31 28.66 185.31 0 256 0c70.69 0 134.7 28.66 181.02 74.98C483.34 121.31 512 185.31 512 256c0 70.7-28.65 134.7-74.98 181.02C390.7 483.35 326.7 512 256 512c-70.69 0-134.69-28.66-181.02-74.98C28.66 390.7 0 326.69 0 256c0-70.69 28.66-134.69 74.98-181.02z"/></svg></a>
+    
 
   {{ include(templateMain) }}
 
   </main>
+
+
+  <footer>
+    <img class="logo" src="assets/imgs/icones/logo-blanc.svg" alt="Logo Enchères Stampee">
+
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 373 4"><path class="cls-1" d="M0 2h373M0 2l11.66-.3 11.65-.23L46.62 1Q69.95.68 93.25.44c15.54-.18 31.08-.22 46.63-.33L186.5 0l46.62.11c15.55.11 31.09.14 46.63.33s31.08.34 46.63.58l23.31.45 11.65.23L373 2l-11.66.3-11.65.23-23.31.47q-23.33.35-46.63.58c-15.54.19-31.08.22-46.63.33L186.5 4l-46.62-.11c-15.55-.11-31.09-.15-46.63-.34S62.17 3.21 46.62 3l-23.31-.47-11.65-.23Z"/></svg>
+
+    <section class="newsletter">
+      <h6>Infolettre</h6>
+      <form action="get">
+        <label for="news">Inscrivez-vous à notre infolettre</label>
+        <input id="news" type="email" placeholder="Entrez votre courriel">
+        <input class="button" type="submit" value="S'inscrire">
+      </form>
+    </section>
+
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 373 4"><path class="cls-1" d="M0 2h373M0 2l11.66-.3 11.65-.23L46.62 1Q69.95.68 93.25.44c15.54-.18 31.08-.22 46.63-.33L186.5 0l46.62.11c15.55.11 31.09.14 46.63.33s31.08.34 46.63.58l23.31.45 11.65.23L373 2l-11.66.3-11.65.23-23.31.47q-23.33.35-46.63.58c-15.54.19-31.08.22-46.63.33L186.5 4l-46.62-.11c-15.55-.11-31.09-.15-46.63-.34S62.17 3.21 46.62 3l-23.31-.47-11.65-.23Z"/></svg>
+    
+    <section class="nav-footer">
+      <h6>Navigation du pied de page</h6>
+      <div>
+        <a href="#">Aide</a>
+        <ul class="footer-hidden">
+          <li><a href="#">Profil</a></li>
+          <li><a href="#">Placer une offre</a></li>
+          <li><a href="#">Suivre une enchère</a></li>
+          <li><a href="#">Trouver une enchère</a></li>
+          
+        </ul>
+      </div>
+      <div>
+
+        <a href="#">Contactez-nous</a>
+        <ul class="footer-hidden">
+          <li><a href="#">Maison mère</a></li>
+          <li><a href="#">Webmester</a></li>
+        </ul>
+        <hr class="footer-hidden">
+        <ul class="footer-hidden">
+          <li><a href="#">Angleterre</a></li>
+          <li><a href="#">Australie</a></li>
+          <li><a href="#">Canada</a></li>
+          <li><a href="#">États-Unis</a></li>
+        </ul>
+      </div>
+      <div>
+
+        <a href="#">Évaluation</a>
+      </div>
+      <div>
+        
+        <a href="#">Livraison et retour</a>
+      </div>
+      <div>
+
+        <a href="#">FAQ</a>
+      </div>
+      </section>
+      <div class="underfooter">
+
+        <div>
+          <a href="#">Suivez-nous</a>
+          <div class="logo-medias">
+            <a href="#" aria-label="Logo Google+"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 24"><path  fill-rule="evenodd" d="M20.5 10V7h-2v3h-3v2h3v3h2v-3h3v-2h-3Zm-7.7 3.4-1.1-.8c-.4-.3-.8-.7-.8-1.4s.5-1.3 1-1.6c1.3-1 2.6-2.1 2.6-4.3 0-2.1-1.3-3.3-2-3.9h1.7L15.4 0H9.2C4.8 0 2.6 2.8 2.6 5.8c0 2.3 1.8 4.8 5 4.8h.8c-.1.3-.4.8-.4 1.3 0 1 .4 1.4.9 2-1.4.1-4 .4-5.9 1.6C1.2 16.6.7 18.1.7 19.2c0 2.3 2.1 4.5 6.6 4.5 5.4 0 8-3 8-5.9 0-2.1-1.1-3.2-2.5-4.4ZM5.2 4.3c0-2.2 1.3-3.2 2.7-3.2 2.6 0 4 3.5 4 5.5 0 2.6-2.1 3.1-2.9 3.1-2.5 0-3.8-3.1-3.8-5.4Zm3.6 18c-3.3 0-5.4-1.5-5.4-3.7s2-2.9 2.6-3.2c1.3-.4 3-.5 3.3-.5h.7c2.4 1.7 3.4 2.4 3.4 4 0 1.9-1.9 3.4-4.6 3.4Z" class="fill-000000"/></svg></a>
+            <a href="#" aria-label="Logo Facebook"><svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" clip-rule="evenodd" viewBox="0 0 512 512"><path  fill-rule="nonzero" d="m374.244 285.825 14.105-91.961h-88.233v-59.677c0-25.159 12.325-49.682 51.845-49.682h40.116V6.214S355.67 0 320.864 0c-72.67 0-120.165 44.042-120.165 123.775v70.089h-80.777v91.961h80.777v222.31A320.565 320.565 0 0 0 250.408 512c16.911 0 33.511-1.324 49.708-3.865v-222.31h74.128Z" class="fill-000000"/></svg></a>
+            <a href="#" aria-label="Logo Instagram"><svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 56.7 56.7"><path  d="M28.2 16.7c-7 0-12.8 5.7-12.8 12.8s5.7 12.8 12.8 12.8S41 36.5 41 29.5s-5.8-12.8-12.8-12.8zm0 21c-4.5 0-8.2-3.7-8.2-8.2s3.7-8.2 8.2-8.2 8.2 3.7 8.2 8.2-3.7 8.2-8.2 8.2z" class="fill-000000"/><circle cx="41.5" cy="16.4" r="2.9"  class="fill-000000"/><path  d="M49 8.9c-2.6-2.7-6.3-4.1-10.5-4.1H17.9c-8.7 0-14.5 5.8-14.5 14.5v20.5c0 4.3 1.4 8 4.2 10.7 2.7 2.6 6.3 3.9 10.4 3.9h20.4c4.3 0 7.9-1.4 10.5-3.9 2.7-2.6 4.1-6.3 4.1-10.6V19.3c0-4.2-1.4-7.8-4-10.4zm-.4 31c0 3.1-1.1 5.6-2.9 7.3s-4.3 2.6-7.3 2.6H18c-3 0-5.5-.9-7.3-2.6C8.9 45.4 8 42.9 8 39.8V19.3c0-3 .9-5.5 2.7-7.3 1.7-1.7 4.3-2.6 7.3-2.6h20.6c3 0 5.5.9 7.3 2.7 1.7 1.8 2.7 4.3 2.7 7.2v20.6z" class="fill-000000"/></svg></a>
+            <a href="#" aria-label="Logo Twitter"><svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 56.693 56.693"><path  d="M52.837 15.065a20.11 20.11 0 0 1-5.805 1.591 10.125 10.125 0 0 0 4.444-5.592 20.232 20.232 0 0 1-6.418 2.454 10.093 10.093 0 0 0-7.377-3.192c-5.581 0-10.106 4.525-10.106 10.107 0 .791.089 1.562.262 2.303-8.4-.422-15.848-4.445-20.833-10.56a10.055 10.055 0 0 0-1.368 5.082c0 3.506 1.784 6.6 4.496 8.412a10.078 10.078 0 0 1-4.578-1.265l-.001.128c0 4.896 3.484 8.98 8.108 9.91a10.162 10.162 0 0 1-4.565.172c1.287 4.015 5.019 6.938 9.441 7.019a20.276 20.276 0 0 1-12.552 4.327c-.815 0-1.62-.048-2.411-.142a28.6 28.6 0 0 0 15.493 4.541c18.591 0 28.756-15.4 28.756-28.756 0-.438-.009-.875-.028-1.309a20.47 20.47 0 0 0 5.042-5.23z" class="fill-000000"/></svg></a>
+            <a href="#" aria-label="Logo Youtube"><svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" clip-rule="evenodd" viewBox="0 0 512 512"><path  fill-rule="nonzero" d="M501.303 132.765c-5.887-22.03-23.235-39.377-45.265-45.265C416.106 76.8 256 76.8 256 76.8s-160.107 0-200.039 10.7c-22.026 5.888-39.377 23.235-45.264 45.265C0 172.693 0 256.003 0 256.003s0 83.308 10.697 123.232c5.887 22.03 23.238 39.382 45.264 45.269C95.893 435.2 256 435.2 256 435.2s160.106 0 200.038-10.696c22.03-5.887 39.378-23.239 45.265-45.269 10.696-39.924 10.696-123.232 10.696-123.232s0-83.31-10.696-123.238ZM204.797 332.804V179.201l133.019 76.802-133.019 76.801Z" class="fill-000000"/></svg></a>
+            
+          </div>
+        </div>
+        <div>
+          
+          <a href="#">Termes et conditions</a>
+        </div>
+      </div>
+    
+   
+    <small>&copy; 2022 Enchères Stampee. Tous les droits sont réservés</small>
+
+  </footer>
 </body>
 </html>
