@@ -116,19 +116,16 @@ class RequetesSQL extends RequetesPDO {
 //     return $this->getLignes(['film_id' => $film_id]);
 //   }
 
-// /**
-//    * Connecter un utilisateur
-//    * @param array $champs, tableau avec les champs utilisateur_courriel et utilisateur_mdp  
-//    * @return array|false ligne de la table, false sinon 
-//    */ 
-//   public function connecter($champs) {
-//     $this->sql = "
-//       SELECT utilisateur_id, utilisateur_nom, utilisateur_prenom, utilisateur_courriel, utilisateur_profil
-//       FROM utilisateur
-//       WHERE utilisateur_courriel = :utilisateur_courriel AND utilisateur_mdp = SHA2(:utilisateur_mdp, 512)";
+/**
+   * Connecter un utilisateur
+   * @param array $champs, tableau avec les champs utilisateur_courriel et utilisateur_mdp  
+   * @return array|false ligne de la table, false sinon 
+   */ 
+  public function connecter($champs) {
+    $this->sql = "SELECT user_id, user_lastName, user_firstName, user_email, user_status_id, user_address, user_zipCode, user_city FROM users WHERE user_email = :user_email AND user_password = SHA2(:user_password, 512)";
 
-//     return $this->getLignes($champs, RequetesPDO::UNE_SEULE_LIGNE);
-//   } 
+    return $this->getLignes($champs, RequetesPDO::UNE_SEULE_LIGNE);
+  } 
 
   
 //   /* GESTION DES UTILISATEURS 
@@ -173,8 +170,7 @@ class RequetesSQL extends RequetesPDO {
    * @return string|boolean clé primaire de la ligne ajoutée, false sinon
    */ 
   public function addUser($champs) {
-    $this->sql = '
-      INSERT INTO users SET user_lastName = :user_lastName, user_firstName = :user_firstName, user_email =:user_emil, user_password = SHA2(:user_password, 512), user_address = :user_address, user_city = :user_city, user_zipCode = :user_zipCode, user_status_id = 1';
+    $this->sql = ' INSERT INTO users SET user_lastName = :user_lastName, user_firstName = :user_firstName, user_email =:user_email, user_password = SHA2(:user_password, 512), user_address = :user_address, user_city = :user_city, user_zipCode = :user_zipCode, user_status_id = 1';
     return $this->CUDLigne($champs); 
   }
   
@@ -201,17 +197,18 @@ class RequetesSQL extends RequetesPDO {
 //     return $this->CUDLigne(['utilisateur_id' => $utilisateur_id]); 
 //   }
 
-//    /**
-//    * Modification du mot de passe
-//    * @param int $utilisateur_id clé primaire
-//    * @return boolean true si suppression effectuée, false sinon
-//    */ 
-//   public function modificationMDP($champs) {
- 
-//     $this->sql = '
-//       UPDATE utilisateur SET utilisateur_mdp = SHA2(:utilisateur_mdp, 512)
-//       WHERE utilisateur_id = :utilisateur_id';
-//     return $this->CUDLigne($champs); 
-//   }
+     /**
+   * Ajouter une enchère
+   * @param array $champs tableau des champs de l'enchère 
+   * @return string|boolean clé primaire de la ligne ajoutée, false sinon
+   */ 
+  public function addAuction($champs) {
+    $this->sql = ' INSERT INTO auctions SET auction_name = :auction_name, auction_description = :auction_description, auction_startDate =:auction_startDate, auction_finishDate = :auction_finishDate, auction_lordChoice = :auction_lordChoice, auction_price = :auction_price, auction_user_id = :auction_user_id, auction_status_id = :auction_status_id';
+    return $this->CUDLigne($champs); 
+  }
 
+   public function addStamp($champs) {
+    $this->sql = ' INSERT INTO stamps SET stamp_name = :stamp_name, stamp_description = :stamp_description,  stamp_price = :stamp_price, stamp_date = :stamp_date, stamp_certified =:stamp_certified, stamp_format = :stamp_format, stamp_color = :stamp_color, stamp_location_id = :stamp_location_id, stamp_image_id = :stamp_image_id, stamp_condition_id = :stamp_condition_id, stamp_rareness_id = :stamp_rareness_id, stamp_auction_id = :stamp_auction_id ';
+    return $this->CUDLigne($champs); 
+  }
 }

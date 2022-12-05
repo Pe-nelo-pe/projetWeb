@@ -18,6 +18,7 @@ class Vue {
                                     // ['cache' => 'app/vues/templates/cache']
                                    );
     
+  $twig->addGlobal("session", $_SESSION); 
     $donnees['templateMain'] = "$vue.twig";
 
     $html = $twig->render("$gabarit.twig", $donnees);

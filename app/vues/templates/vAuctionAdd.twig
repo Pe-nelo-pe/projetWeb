@@ -1,0 +1,86 @@
+<section>
+  <h1>{{ titre|upper }}</h1>
+  <p class="messageRetourAction {{ classRetour }}">{{ messageRetourAction|raw}}&nbsp;</p>   
+  
+  <form method="POST" action="auction?entite=auction&action=a">
+
+    <label>Nom de l'enchère</label>
+    <input type="text" name="auction_name" value="{{auction.auction_name }}">
+    <span>&nbsp;{{ erreurs.auction_name }}</span>
+<hr>
+    <label>Description</label>
+    <input type="text" name="auction_description" value="{{ auction.auction_description }}">
+    <span>&nbsp;{{ erreurs.user_lastName }}</span>
+<hr>
+
+    <label>Début de l'enchère</label>
+    <input type="date" name="auction_startDate" value="{{ auction.auction_startDate }}">
+    <span>&nbsp;{{ erreurs.auction_startDate }}</span>
+<hr>
+
+    <label>Fin de l'enchère</label>
+    <input type="date" name="auction_finishDate" value="{{ auction.auction_finishDate }}">
+    <span>&nbsp;{{ erreurs.auction_finishDate }}</span>
+<hr>
+
+    <label>Prix de base</label>
+    <input type="number" name="auction_price" value="{{ auction.auction_price }}">
+    <span>&nbsp;{{ erreurs.auction_price}}</span>
+
+    
+    <input type="hidden" name="auction_user_id" value="{{ auction.auction_user_id }}">
+
+    <input type="hidden" name="auction_status_id" value="{{ auction.auction_status_id }}">
+
+
+
+    <h4>Ajout de timbre</h4>
+   
+<label>Nom du timbre</label>
+    <input type="text" name="stamp_name" value="{{stamp.stamp_name }}">
+    <span>&nbsp;{{ erreurs.stamp_name }}</span>
+  <hr>
+    <label>Prix du timbre</label>
+    <input type="number" name="stamp_price" value="{{ stamp.stamp_price }}">
+    <span>&nbsp;{{ erreurs.stamp_price}}</span>
+<hr>
+    <label>Description</label>
+    <input type="text" name="auction_description" value="{{ stamp.auction_description }}">
+    <span>&nbsp;{{ erreurs.user_lastName }}</span>
+<hr>
+
+    <label>Date</label>
+    <input type="text" name="stamp_date" value="{{ stamp.stamp_date }}">
+    <span>&nbsp;{{ erreurs.stamp_date }}</span>
+<hr>
+
+   <label>Format</label>
+    <input type="text" name="stamp_format" value="{{ stamp.stamp_format }}">
+    <span>&nbsp;{{ erreurs.stamp_format }}</span>
+<hr>
+
+ <label>Couleur principale</label>
+    <input type="text" name="stamp_color" value="{{ stamp.stamp_color }}">
+    <span>&nbsp;{{ erreurs.stamp_color }}</span>
+<hr>
+
+  <label>Certifié</label>
+  <select name="stamp_certified">
+    <option value="0"> Non </option>
+    <option value="1"> Oui </option>
+  </select>
+
+<hr>
+
+
+    
+    <input type="hidden" name="auction_user_id" value="{{ stamp.auction_user_id }}">
+
+    <input type="hidden" name="auction_status_id" value="{{ stamp.auction_status_id }}">
+
+
+
+    <input type="submit" value="Envoyer">
+
+  </form>
+</section>

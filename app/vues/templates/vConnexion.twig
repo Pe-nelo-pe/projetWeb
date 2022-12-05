@@ -1,15 +1,15 @@
 <section>
   <h1>{{ titre|upper }}</h1>
   
-  <form method="POST" action="admin">
+  <form method="POST" action="session?entite=user&action=s">
 
     <br><span>&nbsp;{{ messageErreurConnexion }}</span>
 
     <label>Courriel</label>
-    <input name="utilisateur_courriel" value="">
+    <input type="email" name="user_email" value="{{ user.user_email}}">
 
     <label>Mot de passe</label>
-    <input type="password" name="utilisateur_mdp" value="">
+    <input type="password" name="user_password" value="">
   
     <input type="submit" value="Envoyer">
 

@@ -7,7 +7,7 @@
 
 class Frontend extends Routeur {
 
-  private $film_id;
+
   
   /**
    * Constructeur qui initialise des propriétés à partir du query string
@@ -24,7 +24,7 @@ class Frontend extends Routeur {
    * Lister les films à l'affiche
    * 
    */  
-  public function afficherAccueil() {
+  public function viewHome() {
     //$films = $this->oRequetesSQL->getFilms('enSalle');
     (new Vue)->generer("accueil",
             array(),
