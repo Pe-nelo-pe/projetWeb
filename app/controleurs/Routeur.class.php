@@ -9,10 +9,10 @@
 class Routeur {
 
   private $routes = [
-    ["",              "Frontend", "viewHome"],
-    ["accueil",       "Frontend", "viewHome"],
-    ["session",     "Session", "gestionConnexion"],
-    ["auction",   "Auction", "gererAuction"],
+    ["",          "Frontend", "viewHome"],
+    ["accueil",   "Frontend", "viewHome"],
+    ["session",   "Session",  "gestionConnexion"],
+    ["auctions",  "Auctions", "gererAuction"],
  
   ];
 

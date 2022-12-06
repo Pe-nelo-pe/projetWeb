@@ -1,0 +1,46 @@
+<section>
+<a href="session?entite=user&action=c"> Retour au compte </a>
+  <h1>{{ titre|upper }}</h1>
+
+ <p class="messageRetourAction {{ classRetour }}">{{ messageRetourAction}}&nbsp;</p>   
+      <div class=" list">
+  {% for auction in auctions %}
+    
+    
+        <article class="card ">
+          <div class="header">
+            <h5>Lot # {{ auction.auction_id}}</h5>
+           
+          </div>
+            
+          <div class="content">
+
+            <div class="img-name">
+              <a href="#">
+                
+                <img src="{{auction.stamp_img_id}}" alt="">
+                <h4>{{ auction.auction_name}}</h4>
+              </a>
+            </div>
+            <div class="info-btn">
+              <div class="info">
+                <span>3j 2h 34m </span>
+                
+              </div>
+              <div>
+                <a href="" class=" bet button">Modifier</a>
+                <br>
+                <a href="" class=" bet button">Supprimer</a>
+              </div>
+            </div>
+          </div>
+          </article>
+     
+     
+    
+  {% else %}
+    <div>Aucun enchère.</div>
+  {% endfor %}
+  </div>
+</section> 
+

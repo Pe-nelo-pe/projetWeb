@@ -1,31 +1,33 @@
 <section>
+<a href="session?entite=user&action=c"> Retour au compte </a>
+
   <h1>{{ titre|upper }}</h1>
   <p class="messageRetourAction {{ classRetour }}">{{ messageRetourAction|raw}}&nbsp;</p>   
   
-  <form method="POST" action="auction?entite=auction&action=a">
+  <form enctype="multipart/form-data" method="POST" action="auctions?entite=auction&action=a">
 
     <label>Nom de l'enchère</label>
     <input type="text" name="auction_name" value="{{auction.auction_name }}">
-    <span>&nbsp;{{ erreurs.auction_name }}</span>
-<hr>
+    <span>&nbsp;{{ erreursA.auction_name }}</span>
+<br>
     <label>Description</label>
     <input type="text" name="auction_description" value="{{ auction.auction_description }}">
-    <span>&nbsp;{{ erreurs.user_lastName }}</span>
-<hr>
+    <span>&nbsp;{{ erreursA.auction_description }}</span>
+<br>
 
     <label>Début de l'enchère</label>
     <input type="date" name="auction_startDate" value="{{ auction.auction_startDate }}">
-    <span>&nbsp;{{ erreurs.auction_startDate }}</span>
-<hr>
+    <span>&nbsp;{{ erreursA.auction_startDate }}</span>
+<br>
 
     <label>Fin de l'enchère</label>
     <input type="date" name="auction_finishDate" value="{{ auction.auction_finishDate }}">
-    <span>&nbsp;{{ erreurs.auction_finishDate }}</span>
-<hr>
+    <span>&nbsp;{{ erreursA.auction_finishDate }}</span>
+<br>
 
-    <label>Prix de base</label>
-    <input type="number" name="auction_price" value="{{ auction.auction_price }}">
-    <span>&nbsp;{{ erreurs.auction_price}}</span>
+    <label>Prix plancher</label>
+    <input type="number" step="0.01" name="auction_price" value="{{ auction.auction_price }}">
+    <span>&nbsp;{{ erreursA.auction_price}}</span>
 
     
     <input type="hidden" name="auction_user_id" value="{{ auction.auction_user_id }}">
@@ -38,46 +40,81 @@
    
 <label>Nom du timbre</label>
     <input type="text" name="stamp_name" value="{{stamp.stamp_name }}">
-    <span>&nbsp;{{ erreurs.stamp_name }}</span>
-  <hr>
-    <label>Prix du timbre</label>
-    <input type="number" name="stamp_price" value="{{ stamp.stamp_price }}">
-    <span>&nbsp;{{ erreurs.stamp_price}}</span>
-<hr>
+    <span>&nbsp;{{ erreursS.stamp_name }}</span>
+  <br>
+    <label>Estimation du timbre</label>
+    <input type="number" step="0.01" name="stamp_price" value="{{ stamp.stamp_price }}">
+    <span>&nbsp;{{ erreursS.stamp_price}}</span>
+<br>
     <label>Description</label>
-    <input type="text" name="auction_description" value="{{ stamp.auction_description }}">
-    <span>&nbsp;{{ erreurs.user_lastName }}</span>
-<hr>
+    <input type="text" name="stamp_description" value="{{ stamp.stamp_description }}">
+    <span>&nbsp;{{ erreursS.stamp_description }}</span>
+<br>
 
     <label>Date</label>
     <input type="text" name="stamp_date" value="{{ stamp.stamp_date }}">
-    <span>&nbsp;{{ erreurs.stamp_date }}</span>
-<hr>
+    <span>&nbsp;{{ erreursS.stamp_date }}</span>
+<br>
 
    <label>Format</label>
     <input type="text" name="stamp_format" value="{{ stamp.stamp_format }}">
-    <span>&nbsp;{{ erreurs.stamp_format }}</span>
-<hr>
+    <span>&nbsp;{{ erreursS.stamp_format }}</span>
+<br>
 
  <label>Couleur principale</label>
     <input type="text" name="stamp_color" value="{{ stamp.stamp_color }}">
-    <span>&nbsp;{{ erreurs.stamp_color }}</span>
-<hr>
+    <span>&nbsp;{{ erreursS.stamp_color }}</span>
+<br>
 
   <label>Certifié</label>
   <select name="stamp_certified">
     <option value="0"> Non </option>
     <option value="1"> Oui </option>
   </select>
+<span>&nbsp;{{ erreursS.stamp_certified }}</span>
+<br>
+<label>Pays d'origine</label>
+  <select name="stamp_location_id">
+   <option value="" disabled selected>Pays</option>   
+  {% for location in locations %}
+    <option value="{{ location.location_id}}"> {{ location.location_name }} </option>
+   {% endfor %}
+  </select>
+<span>&nbsp;{{ erreursS.stamp_location_id }}</span>
 
-<hr>
+  <br>
+<label>Condition</label>
+  <select name="stamp_condition_id">
+  <option value="" disabled selected>Conditions</option>   
+  {% for condition in conditions %}
+    <option value="{{ condition.condition_id}}"> {{ condition.condition_def }} </option>
+   {% endfor %}
+  </select>
+<span>&nbsp;{{ erreursS.stamp_condition_id }}</span>
 
+  <br>
+<label>Rareté</label>
+  <select name="stamp_rareness_id">
+  <option value="" disabled selected>Rareté</option>   
+  {% for rarenes in rareness %}
+    <option value="{{ rarenes.rareness_id}}"> {{ rarenes.rareness_def }} </option>
+   {% endfor %}
+  </select>
+
+<span>&nbsp;{{ erreursS.stamp_rareness_id }}</span>
+
+ <label> Image </label>
+  <input name="userfile" type="file" />
+{# <span>&nbsp;{{ erreursS.stamp_rareness_id }}</span> #}
 
     
     <input type="hidden" name="auction_user_id" value="{{ stamp.auction_user_id }}">
 
-    <input type="hidden" name="auction_status_id" value="{{ stamp.auction_status_id }}">
+    <input type="hidden" name="auction_status_id" value="2">
 
+
+   
+   
 
 
     <input type="submit" value="Envoyer">

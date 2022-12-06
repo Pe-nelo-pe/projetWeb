@@ -203,7 +203,7 @@ class RequetesSQL extends RequetesPDO {
    * @return string|boolean clé primaire de la ligne ajoutée, false sinon
    */ 
   public function addAuction($champs) {
-    $this->sql = ' INSERT INTO auctions SET auction_name = :auction_name, auction_description = :auction_description, auction_startDate =:auction_startDate, auction_finishDate = :auction_finishDate, auction_lordChoice = :auction_lordChoice, auction_price = :auction_price, auction_user_id = :auction_user_id, auction_status_id = :auction_status_id';
+    $this->sql = ' INSERT INTO auctions SET auction_name = :auction_name, auction_description = :auction_description, auction_startDate =:auction_startDate, auction_finishDate = :auction_finishDate, auction_price = :auction_price, auction_user_id = :auction_user_id, auction_status_id = :auction_status_id';
     return $this->CUDLigne($champs); 
   }
 
@@ -211,4 +211,42 @@ class RequetesSQL extends RequetesPDO {
     $this->sql = ' INSERT INTO stamps SET stamp_name = :stamp_name, stamp_description = :stamp_description,  stamp_price = :stamp_price, stamp_date = :stamp_date, stamp_certified =:stamp_certified, stamp_format = :stamp_format, stamp_color = :stamp_color, stamp_location_id = :stamp_location_id, stamp_image_id = :stamp_image_id, stamp_condition_id = :stamp_condition_id, stamp_rareness_id = :stamp_rareness_id, stamp_auction_id = :stamp_auction_id ';
     return $this->CUDLigne($champs); 
   }
+
+  public function getAuctions(){
+    $this->sql = '
+       SELECT * FROM auctions
+       ';
+    return $this->getLignes();
+  }
+
+
+  public function getLocations(){
+    $this->sql = '
+       SELECT * FROM locations
+       order by location_name ASC';
+    return $this->getLignes();
+  }
+
+   public function getRareness(){
+    $this->sql = '
+       SELECT * FROM rareness
+       order by rareness_id ASC';
+    return $this->getLignes();
+  }
+
+   public function getConditions(){
+    $this->sql = '
+       SELECT * FROM conditions
+       order by condition_id ASC';
+    return $this->getLignes();
+  }
+
+
+  
+   public function addImg($champs){
+    $this->sql = ' INSERT INTO images SET image_link =:image_link';
+    return $this->CUDLigne($champs);
+  }
+
+  
 }
