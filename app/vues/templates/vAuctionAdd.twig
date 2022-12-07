@@ -4,7 +4,7 @@
   <h1>{{ titre|upper }}</h1>
   <p class="messageRetourAction {{ classRetour }}">{{ messageRetourAction|raw}}&nbsp;</p>   
   
-  <form enctype="multipart/form-data" method="POST" action="auctions?entite=auction&action=a">
+  <form enctype="multipart/form-data" method="POST" action="auctions?entite=auction&action=a" class="formAuction">
 
     <label>Nom de l'enchère</label>
     <input type="text" name="auction_name" value="{{auction.auction_name }}">
@@ -52,7 +52,7 @@
 <br>
 
     <label>Date</label>
-    <input type="text" name="stamp_date" value="{{ stamp.stamp_date }}">
+    <input type="number" name="stamp_date" value="{{ stamp.stamp_date }}">
     <span>&nbsp;{{ erreursS.stamp_date }}</span>
 <br>
 
@@ -73,6 +73,7 @@
   </select>
 <span>&nbsp;{{ erreursS.stamp_certified }}</span>
 <br>
+
 <label>Pays d'origine</label>
   <select name="stamp_location_id">
    <option value="" disabled selected>Pays</option>   
@@ -105,7 +106,7 @@
 
  <label> Image </label>
   <input name="userfile" type="file" />
-{# <span>&nbsp;{{ erreursS.stamp_rareness_id }}</span> #}
+ <span>&nbsp;{{ erreursI }}</span> 
 
     
     <input type="hidden" name="auction_user_id" value="{{ stamp.auction_user_id }}">
@@ -117,7 +118,7 @@
    
 
 
-    <input type="submit" value="Envoyer">
+    <input type="submit" value="Envoyer" class="button">
 
   </form>
 </section>

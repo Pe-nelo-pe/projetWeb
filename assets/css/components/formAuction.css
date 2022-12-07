@@ -1,0 +1,14 @@
+
+.formAuction input[type="number"]::-webkit-outer-spin-button,
+.formAuction input[type="number"]::-webkit-inner-spin-button {
+    display: none;
+    visibility: hidden;
+    margin: 0;
+}
+
+
+
+.formAuction input[type=number]{
+  min-width: 0;
+}
+

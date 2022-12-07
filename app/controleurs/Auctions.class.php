@@ -53,7 +53,7 @@ class Auctions extends Routeur {
         throw new Exception("L'entité $this->entite n'existe pas.");
       }
     } else {
-      $this->listing();
+      $this->listAuctions();
     }
   }
  
@@ -130,11 +130,19 @@ class Auctions extends Routeur {
    
 
     if (count($_POST) !== 0) {
+
+      // var_dump($_POST);
+  
+       //die;
       $stamp = array_splice($_POST, 7);
       $auction = $_POST;
 
       $oAuction = new Auction($auction); 
       $erreursA = $oAuction->erreurs; 
+
+      // $oImage = new Image($_FILES); 
+      // $erreursI = $oImage->erreurs;
+       $erreursI = "";
 
       $oStamp = new Stamp($stamp); 
       $erreursS = $oStamp->erreurs;
@@ -150,27 +158,26 @@ class Auctions extends Routeur {
           'auction_user_id' => $user->user_id,
           'auction_status_id' => $oAuction->auction_status_id
         ]);
+   //  var_dump($_FILES);
+        if($_FILES['userfile']['error'] === 4){
+          $erreursI = 'Champs obligatoire';
 
-        if($_FILES){
+        } else {
+
           $nom_fichier = $_FILES['userfile']['name'];
           $fichier = $_FILES['userfile']['tmp_name'];
 
           $url_img = "assets/imgs/stamps/".$nom_fichier;
           //Ajouter stamptime pour permettre d'avoir des images avec le mm nom
           if(move_uploaded_file($fichier, $url_img)){
-            //echo "Fichier copié";
              $img_id = $this->oRequetesSQL->addImg([
               'image_link' => $url_img
-             ]);
-            
-          //} else {
-           // echo "fichier non copié";
-          }
+            ]);
+          }  
+     
         }
 
-     
-        // $oStamp = new Stamp($stamp); 
-        // $erreursS = $oStamp->erreurs;
+print_r($oStamp);
         if (count($erreursS) === 0) { 
           $stamp_id = $this->oRequetesSQL->addStamp([
             'stamp_name' => $oStamp->stamp_name, 
@@ -187,18 +194,18 @@ class Auctions extends Routeur {
              'stamp_auction_id' => $auction_id
           ]);
 
-
-
-
-        }
-        if ($auction_id > 0 && $stamp_id > 0) { 
+if ($auction_id > 0 && $stamp_id > 0 && $img_id > 0) { 
           $this->messageRetourAction = "Enchère ajoutée.";
+          $this->listAuctions(); 
+        exit;
         } else {
           $this->classRetour = "erreur";
           $this->messageRetourAction = "Ajout non effectué.";
         }
-        $this->listAuctions(); 
-        exit;
+        }
+
+        
+        
       }
     }
     
@@ -212,6 +219,7 @@ class Auctions extends Routeur {
               'conditions'  => $condition,
               'rareness'    => $rareness,
               'erreursA'    => $erreursA,
+              'erreursI'    => $erreursI,
               'erreursS'    => $erreursS
             ),
             'gabarit-frontend');

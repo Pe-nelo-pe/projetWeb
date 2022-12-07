@@ -143,16 +143,8 @@ class Stamp
    */    
   public function setStamp_date($stamp_date) {
     $currentDate = date('Y');
-//     echo $stamp_date;
-if(is_string($stamp_date)){
-  echo "string";
-} else if (is_float($stamp_date)){
-  echo "numero";
 
-}
-    $stamp_date = floatval($stamp_date);
-    //echo $stamp_date;
-
+    $stamp_date = intval($stamp_date);
     
     unset($this->erreurs['stamp_date']);
 
@@ -180,6 +172,7 @@ if(is_string($stamp_date)){
    * @return $this
    */    
   public function setStamp_format($stamp_format) {
+    
     $this->stamp_format = $stamp_format; 
   }   
 
@@ -199,8 +192,9 @@ if(is_string($stamp_date)){
    */    
   public function setStamp_location_id($stamp_location_id) {
     unset($this->erreurs['stamp_location_id']);
-
-     if (!$stamp_location_id) {
+echo $stamp_location_id.'<br><br>';
+     if (!isset($stamp_location_id)) {
+      echo'<br><br> vide <br><br>';
       $this->erreurs['stamp_location_id'] = "Champs obligatoire.";
     }
     $this->stamp_location_id = $stamp_location_id; 
