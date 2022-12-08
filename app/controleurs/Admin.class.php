@@ -110,7 +110,7 @@ class Admin extends Routeur {
   public function modificationMDP() {
 
     $oUser = new User(["user_id"=>$this->user_id]);
-    $oUser->genererMdp();
+    //$oUser->genererMdp();
 
     if ($this->oRequetesSQL->modificationMDP(['user_id'=> $oUser->user_id, 'user_mdp'=> $oUser->user_mdp])) {
        
@@ -119,10 +119,10 @@ class Admin extends Routeur {
        $oUser = $this->oRequetesSQL->getUser($this->user_id);
        $oUser["user_mdp"] = $newMDP;
 
-       $retour = (new GestionCourriel)->envoyerMdp($oUser);
+      // $retour = (new GestionCourriel)->envoyerMdp($oUser);
        
        $this->messageRetourAction = "Modification du mot de passe de l'user numéro $this->user_id effectuée. Courriel envoyé à ". $oUser["user_courriel"]. ".<br>";
-       if (ENV === "DEV")  $this->messageRetourAction .= "<a href=\"$retour\">Message dans le fichier $retour</a>";
+      // if (ENV === "DEV")  $this->messageRetourAction .= "<a href=\"$retour\">Message dans le fichier $retour</a>";
        
     } else {
       $this->classRetour = "erreur";
@@ -165,7 +165,7 @@ class Admin extends Routeur {
       $oUser = new User($user); 
       $erreurs = $oUser->erreurs;
       if (count($erreurs) === 0) { 
-        $oUser->genererMdp();
+        //$oUser->genererMdp();
         $user_id = $this->oRequetesSQL->ajouterUser([
           'user_nom'    => $oUser->user_nom,
           'user_prenom' => $oUser->user_prenom,
@@ -174,9 +174,9 @@ class Admin extends Routeur {
           'user_mdp' => $oUser->user_mdp
         ]);
         if ( $user_id > 0) { 
-          $retour = (new GestionCourriel)->envoyerMdp($oUser);
+         // $retour = (new GestionCourriel)->envoyerMdp($oUser);
           $this->messageRetourAction = "Ajout de l'user numéro $user_id effectuée. Courriel envoyé à " . $oUser->user_courriel. ".<br>";
-          if (ENV === "DEV")  $this->messageRetourAction .= "<a href=\"$retour\">Message dans le fichier $retour</a>";
+         // if (ENV === "DEV")  $this->messageRetourAction .= "<a href=\"$retour\">Message dans le fichier $retour</a>";
         } else {
           $this->classRetour = "erreur";
           $this->messageRetourAction = "Ajout de l'user non effectué.";

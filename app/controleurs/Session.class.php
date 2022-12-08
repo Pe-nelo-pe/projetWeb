@@ -162,6 +162,9 @@ class Session extends Routeur {
    * Lister les users
    */
   public function afterSign() {
+    if (isset($_SESSION['oUser'])) {
+     $this->oUser = $_SESSION['oUser'];
+    }
 
     //$users = $this->oRequetesSQL->getUsers();
 
@@ -178,14 +181,18 @@ class Session extends Routeur {
 
 
   public function vAccount() {
+    if (isset($_SESSION['oUser'])) {
+     $this->oUser = $_SESSION['oUser'];
+    }
 
     $user = $this->oUser;
+
   //$users = $this->oRequetesSQL->getUsers();
 
-  (new Vue)->generer('vAccount',
+    (new Vue)->generer('vAccount',
           array(
-            'oUser'               => $this->oUser,
-            'titre'               => ' Votre compte',
+//            'oUser'               => $this->oUser,
+            'titre'               => 'Votre compte',
             'user'                => $user,
             'classRetour'         => $this->classRetour, 
             'messageRetourAction' => $this->messageRetourAction

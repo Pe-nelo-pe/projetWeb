@@ -81,12 +81,13 @@ class Auction
   public function setAuction_name($auction_name) {
     unset($this->erreurs['auction_name']);
 
-  //   $auction_name = trim($auction_name);
+     $auction_name = trim($auction_name);
   //  $regex = "/[^@!*\\+\\=?]+/i";
 
-  //   if (!$auction_name) {
-  //     $this->erreurs['auction_name'] = "Champs obligatoire.";
-  //   } else if (!preg_match($regex, $auction_name)) {
+     if (!$auction_name) {
+       $this->erreurs['auction_name'] = "Champs obligatoire.";
+    } 
+  //else if (!preg_match($regex, $auction_name)) {
   //     $this->erreurs['auction_name'] = "Ne doit contenir les symboles suivants: @ ! * + = ?";
   //   }
     $this->auction_name = ucwords(strtolower($auction_name));
@@ -140,7 +141,7 @@ class Auction
        $this->erreurs['auction_startDate'] = "La date minimum doit être aujourd'hui.";
     }
     
-    $this->auction_startDate = $auction_startDate; // à remplacer avec des contrôles
+    $this->auction_startDate = $auction_startDate; 
   }   
 
     /**

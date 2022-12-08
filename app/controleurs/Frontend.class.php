@@ -26,8 +26,11 @@ class Frontend extends Routeur {
    */  
   public function viewHome() {
     //$films = $this->oRequetesSQL->getFilms('enSalle');
+    $auctions = $this->oRequetesSQL->getAuctionsHome();
     (new Vue)->generer("accueil",
-            array(),
+            array(
+              'auctions'  => $auctions,
+            ),
             "gabarit-frontend");
   }
 

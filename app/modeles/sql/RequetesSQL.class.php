@@ -35,6 +35,8 @@ class RequetesSQL extends RequetesPDO {
 //     return $this->getLignes();
 //   }
 
+
+
 //   /**
 //    * Récupération d'un film
 //    * @param int $film_id, clé du film 
@@ -153,16 +155,7 @@ class RequetesSQL extends RequetesPDO {
 //     return $this->getLignes(['utilisateur_id' => $utilisateur_id], RequetesPDO::UNE_SEULE_LIGNE);
 //   }
 
-//   /**
-//    * Ajouter un utilisateur
-//    * @param array $champs tableau des champs de l'utilisateur 
-//    * @return string|boolean clé primaire de la ligne ajoutée, false sinon
-//    */ 
-//   public function ajouterUtilisateur($champs) {
-//     $this->sql = '
-//       INSERT INTO utilisateur SET utilisateur_nom = :utilisateur_nom, utilisateur_prenom = :utilisateur_prenom, utilisateur_courriel =:utilisateur_courriel, utilisateur_profil =:utilisateur_profil, utilisateur_mdp = SHA2(:utilisateur_mdp, 512)';
-//     return $this->CUDLigne($champs); 
-//   }
+
 
   /**
    * Ajouter un utilisateur
@@ -174,28 +167,28 @@ class RequetesSQL extends RequetesPDO {
     return $this->CUDLigne($champs); 
   }
   
-//   /**
-//    * Modifier un utilisateur
-//    * @param array $champs tableau avec les champs à modifier et la clé utilisateur_id
-//    * @return boolean true si modification effectuée, false sinon
-//    */ 
-//   public function modifierUtilisateur($champs) {
-//     $this->sql = '
-//       UPDATE utilisateur SET utilisateur_nom = :utilisateur_nom, utilisateur_prenom = :utilisateur_prenom, utilisateur_courriel =:utilisateur_courriel, utilisateur_profil =:utilisateur_profil
-//       WHERE utilisateur_id = :utilisateur_id';
-//     return $this->CUDLigne($champs);
-//   }
+  /**
+   * Modifier un utilisateur
+   * @param array $champs tableau avec les champs à modifier et la clé user_id
+   * @return boolean true si modification effectuée, false sinon
+   */ 
+  public function updateUser($champs) {
+    $this->sql = '
+      UPDATE users SET user_lastName = :user_lastName, user_firstName = :user_firstName, user_email =:user_email, user_password = SHA2(:user_password, 512), user_address = :user_address, user_city = :user_city, user_zipCode = :user_zipCode, user_status_id = 1
+      WHERE user_id = :user_id';
+    return $this->CUDLigne($champs);
+  }
 
-//   /**
-//    * Supprimer un utilisateur
-//    * @param int $utilisateur_id clé primaire
-//    * @return boolean true si suppression effectuée, false sinon
-//    */ 
-//   public function supprimerUtilisateur($utilisateur_id) {
-//     $this->sql = '
-//       DELETE FROM utilisateur WHERE utilisateur_id = :utilisateur_id';
-//     return $this->CUDLigne(['utilisateur_id' => $utilisateur_id]); 
-//   }
+  /**
+   * Supprimer un utilisateur
+   * @param int $user_id clé primaire
+   * @return boolean true si suppression effectuée, false sinon
+   */ 
+  public function deleteAuction($auction_id) {
+    $this->sql = '
+      DELETE FROM auctions WHERE auction_id = :auction_id';
+    return $this->CUDLigne(['auction_id' => $auction_id]); 
+  }
 
      /**
    * Ajouter une enchère
@@ -212,9 +205,43 @@ class RequetesSQL extends RequetesPDO {
     return $this->CUDLigne($champs); 
   }
 
-  public function getAuctions(){
+  public function getAuctionsByUser($user_id){
     $this->sql = '
        SELECT * FROM auctions
+       left join stamps on auction_id = stamp_auction_id
+       left join locations on stamp_location_id = location_id
+       left join conditions on stamp_condition_id = condition_id
+       left join rareness on stamp_rareness_id = rareness_id
+       left join images on stamp_image_id = image_id
+       WHERE auction_user_id = :user_id 
+       order by auction_id DESC
+       ';
+    return $this->getLignes(['user_id' => $user_id]);
+  }
+
+    public function getAuctions(){
+    $this->sql = '
+       SELECT * FROM auctions
+       left join stamps on auction_id = stamp_auction_id
+       left join locations on stamp_location_id = location_id
+       left join conditions on stamp_condition_id = condition_id
+       left join rareness on stamp_rareness_id = rareness_id
+       left join images on stamp_image_id = image_id
+
+       ';
+    return $this->getLignes();
+  }
+
+
+  public function getAuctionsHome(){
+    $this->sql = '
+       SELECT * FROM auctions
+       left join stamps on auction_id = stamp_auction_id
+       left join locations on stamp_location_id = location_id
+       left join conditions on stamp_condition_id = condition_id
+       left join rareness on stamp_rareness_id = rareness_id
+       left join images on stamp_image_id = image_id
+      LIMIT 3
        ';
     return $this->getLignes();
   }

@@ -90,15 +90,16 @@ class Stamp
 
      unset($this->erreurs['stamp_name']);
 
-    $stamp_name = trim($stamp_name);
-    $regExp = '/^[a-zÀ-ÖØ-öø-ÿ]{2,}( [a-zÀ-ÖØ-öø-ÿ]{2,})*$/i';
+   // $stamp_name = trim($stamp_name);
+//$regExp = '/^[a-zÀ-ÖØ-öø-ÿ]{2,}( [a-zÀ-ÖØ-öø-ÿ]{2,})*$/i';
 
     if (!$stamp_name) {
       $this->erreurs['stamp_name'] = "Champs obligatoire.";
-    }else if (!preg_match($regExp, $stamp_name)) {
-      $this->erreurs['stamp_name'] = "Au moins 2 caractères alphabétiques pour chaque mot.";
     }
-    $this->stamp_name = ucwords(strtolower($stamp_name));
+    // else if (!preg_match($regExp, $stamp_name)) {
+    //   $this->erreurs['stamp_name'] = "Au moins 2 caractères alphabétiques pour chaque mot.";
+    // }
+    //$this->stamp_name = ucwords(strtolower($stamp_name));
     $this->stamp_name = $stamp_name; 
     return $this;
  
@@ -110,11 +111,6 @@ class Stamp
    * @return $this
    */    
   public function setStamp_description($stamp_description) {
-     unset($this->erreurs['stamp_description']);
-
-    //  if (!$stamp_description) {
-    //   $this->erreurs['stamp_description'] = "Champs obligatoire.";
-    // }
 
     $this->stamp_description = $stamp_description;
   }    
@@ -143,25 +139,17 @@ class Stamp
    */    
   public function setStamp_date($stamp_date) {
     $currentDate = date('Y');
-
     
     unset($this->erreurs['stamp_date']);
     
     if($stamp_date != null){
       
-      //$stamp_date = intval($stamp_date);
-      // if(!is_int($stamp_date)){
-      //   $this->erreurs['stamp_date'] = "Doit être être un chiffre entier";
-      // } 
-      // else 
+    
       if( $stamp_date < 1840 || $stamp_date > $currentDate){
         $this->erreurs['stamp_date'] = "Doit être 1840 et ".$currentDate;
       }
-    } else{
+    } 
       $this->stamp_date = $stamp_date; 
-
-    }
-    
   }   
 
    /**
@@ -173,6 +161,7 @@ class Stamp
     $this->stamp_certified = $stamp_certified; 
   }   
 
+
    /**
    * Mutateur de la propriété stamp_format 
    * @param int $stamp_format
@@ -181,6 +170,7 @@ class Stamp
   public function setStamp_format($stamp_format) {
     $this->stamp_format = $stamp_format; 
   }   
+
 
    /**
    * Mutateur de la propriété stamp_color 

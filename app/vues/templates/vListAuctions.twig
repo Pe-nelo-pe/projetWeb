@@ -18,19 +18,20 @@
             <div class="img-name">
               <a href="#">
                 
-                <img src="{{auction.stamp_img_id}}" alt="">
+                <img src="{{auction.image_link}}" alt="">
                 <h4>{{ auction.auction_name}}</h4>
               </a>
             </div>
             <div class="info-btn">
               <div class="info">
-                <span>3j 2h 34m </span>
+                <span>Date début : {{auction.auction_startDate | date("d/m/Y")}} </span>
+                <span>Date fin : {{auction.auction_finishDate | date("d/m/Y")}} </span>
                 
               </div>
               <div>
-                <a href="" class=" bet button">Modifier</a>
+                <a href="" class=" button">Modifier</a>
                 <br>
-                <a href="" class=" bet button">Supprimer</a>
+                <a href="auctions?entite=auction&action=d&auction_id={{ auction.auction_id }}" class=" button">Supprimer</a>
               </div>
             </div>
           </div>
