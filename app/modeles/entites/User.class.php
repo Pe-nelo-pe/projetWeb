@@ -140,6 +140,17 @@ class User
    * @return $this
    */    
   public function setUser_password($user_password) {
+   unset($this->erreurs['user_password']);
+
+    $regex = "/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/";
+
+    if (!preg_match($regex, $user_password)) {
+      $this->erreurs['user_password'] = "Doit contenir au moins 8 caractères avec une lettre majuscule, une lettre minuscule, un chiffre et un de ces caractères spéciaux # ? ! @ $ % ^ & * -.";
+    }
+   
+    $this->user_password = $user_password; 
+    return $this;
+
     $this->user_password = $user_password; // à remplacer avec des contrôles
   }
 

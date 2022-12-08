@@ -81,14 +81,14 @@ class Auction
   public function setAuction_name($auction_name) {
     unset($this->erreurs['auction_name']);
 
-    $auction_name = trim($auction_name);
-    $regExp = '/^[a-zÀ-ÖØ-öø-ÿ]{2,}( [a-zÀ-ÖØ-öø-ÿ]{2,})*$/i';
+  //   $auction_name = trim($auction_name);
+  //  $regex = "/[^@!*\\+\\=?]+/i";
 
-    if (!$auction_name) {
-      $this->erreurs['auction_name'] = "Champs obligatoire.";
-    } else if (!preg_match($regExp, $auction_name)) {
-      $this->erreurs['auction_name'] = "Au moins 2 caractères alphabétiques pour chaque mot.";
-    }
+  //   if (!$auction_name) {
+  //     $this->erreurs['auction_name'] = "Champs obligatoire.";
+  //   } else if (!preg_match($regex, $auction_name)) {
+  //     $this->erreurs['auction_name'] = "Ne doit contenir les symboles suivants: @ ! * + = ?";
+  //   }
     $this->auction_name = ucwords(strtolower($auction_name));
     $this->auction_name = $auction_name; 
     return $this;

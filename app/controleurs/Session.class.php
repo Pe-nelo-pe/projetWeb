@@ -80,9 +80,9 @@ class Session extends Routeur {
     //   $this->$methode();
     // }
 
-     if (isset($_SESSION['oUser'])) {
+     //if (isset($_SESSION['oUser'])) {
 
-      $this->oUser = $_SESSION['oUser'];
+     // $this->oUser = $_SESSION['oUser'];
       if (isset($this->methodes[$this->entite])) {
         if (isset($this->methodes[$this->entite][$this->action])) {
           $methode = $this->methodes[$this->entite][$this->action]['nom'];
@@ -94,10 +94,10 @@ class Session extends Routeur {
       } else {
         throw new Exception("L'entité $this->entite n'existe pas.");
       }
-    } else {
+    //} else {
       $this->connecter();
     }
-  }
+  //}
 
   /**
    * Connecter un user

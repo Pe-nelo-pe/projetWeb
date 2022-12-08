@@ -144,17 +144,24 @@ class Stamp
   public function setStamp_date($stamp_date) {
     $currentDate = date('Y');
 
-    $stamp_date = intval($stamp_date);
     
     unset($this->erreurs['stamp_date']);
+    
+    if($stamp_date != null){
+      
+      //$stamp_date = intval($stamp_date);
+      // if(!is_int($stamp_date)){
+      //   $this->erreurs['stamp_date'] = "Doit être être un chiffre entier";
+      // } 
+      // else 
+      if( $stamp_date < 1840 || $stamp_date > $currentDate){
+        $this->erreurs['stamp_date'] = "Doit être 1840 et ".$currentDate;
+      }
+    } else{
+      $this->stamp_date = $stamp_date; 
 
-    if(!is_int($stamp_date)){
-      $this->erreurs['stamp_date'] = "Doit être être un chiffre entier";
-    } 
-    else if( $stamp_date < 1840 || $stamp_date > $currentDate){
-      $this->erreurs['stamp_date'] = "Doit être 1840 et ".$currentDate;
     }
-    $this->stamp_date = $stamp_date; 
+    
   }   
 
    /**
@@ -172,7 +179,6 @@ class Stamp
    * @return $this
    */    
   public function setStamp_format($stamp_format) {
-    
     $this->stamp_format = $stamp_format; 
   }   
 
@@ -191,12 +197,7 @@ class Stamp
    * @return $this
    */    
   public function setStamp_location_id($stamp_location_id) {
-    unset($this->erreurs['stamp_location_id']);
-echo $stamp_location_id.'<br><br>';
-     if (!isset($stamp_location_id)) {
-      echo'<br><br> vide <br><br>';
-      $this->erreurs['stamp_location_id'] = "Champs obligatoire.";
-    }
+
     $this->stamp_location_id = $stamp_location_id; 
   }   
 
@@ -220,11 +221,7 @@ echo $stamp_location_id.'<br><br>';
    * @return $this
    */    
   public function setStamp_condition_id($stamp_condition_id) {
-    unset($this->erreurs['stamp_condition_id']);
-
-     if (!$stamp_condition_id) {
-      $this->erreurs['stamp_condition_id'] = "Champs obligatoire.";
-    }
+   
     $this->stamp_condition_id = $stamp_condition_id; 
   }   
 
@@ -234,11 +231,7 @@ echo $stamp_location_id.'<br><br>';
    * @return $this
    */    
   public function setStamp_rareness_id($stamp_rareness_id) {
-    unset($this->erreurs['stamp_rareness_id']);
-
-     if (!$stamp_rareness_id) {
-      $this->erreurs['stamp_rareness_id'] = "Champs obligatoire.";
-    }
+ 
     $this->stamp_rareness_id = $stamp_rareness_id; 
   }   
 
@@ -248,11 +241,7 @@ echo $stamp_location_id.'<br><br>';
    * @return $this
    */    
   public function setStamp_auction_id($stamp_auction_id) {
-    unset($this->erreurs['stamp_auction_id']);
-
-     if (!$stamp_auction_id) {
-      $this->erreurs['stamp_auction_id'] = "Champs obligatoire.";
-    }
+   
     $this->stamp_auction_id = $stamp_auction_id; 
   }   
 

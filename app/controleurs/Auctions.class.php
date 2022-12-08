@@ -64,7 +64,7 @@ class Auctions extends Routeur {
   public function modificationMDP() {
 
     $oUser = new User(["user_id"=>$this->user_id]);
-    $oUser->genererMdp();
+    //$oUser->genererMdp();
 
     if ($this->oRequetesSQL->modificationMDP(['user_id'=> $oUser->user_id, 'user_mdp'=> $oUser->user_mdp])) {
        
@@ -83,7 +83,7 @@ class Auctions extends Routeur {
       $this->messageRetourAction = "Modification du mot de passe de l'user numéro $this->user_id non effectuée.";
     }
     
-    $this->listerUsers();
+    //$this->listerUsers();
 
     
   }
@@ -100,7 +100,7 @@ class Auctions extends Routeur {
     (new Vue)->generer('vListAuctions',
             array(
               'oUser'        => $this->oUser,
-              'titre'               => 'Gestion des users',
+              'titre'               => 'Liste de vos enchères',
               'auctions'        => $auctions,
               'classRetour'         => $this->classRetour, 
               'messageRetourAction' => $this->messageRetourAction
@@ -127,7 +127,11 @@ class Auctions extends Routeur {
     $stamp = [];
     $erreursA = [];
     $erreursS = [];
-   
+    $erreursI = "";
+
+    $auction_id = [];
+    $stamp_id = [];
+    $img_id = [];
 
     if (count($_POST) !== 0) {
 
@@ -142,7 +146,7 @@ class Auctions extends Routeur {
 
       // $oImage = new Image($_FILES); 
       // $erreursI = $oImage->erreurs;
-       $erreursI = "";
+     
 
       $oStamp = new Stamp($stamp); 
       $erreursS = $oStamp->erreurs;
@@ -158,6 +162,8 @@ class Auctions extends Routeur {
           'auction_user_id' => $user->user_id,
           'auction_status_id' => $oAuction->auction_status_id
         ]);
+
+      
    //  var_dump($_FILES);
         if($_FILES['userfile']['error'] === 4){
           $erreursI = 'Champs obligatoire';
@@ -177,7 +183,7 @@ class Auctions extends Routeur {
      
         }
 
-print_r($oStamp);
+//print_r($oStamp);
         if (count($erreursS) === 0) { 
           $stamp_id = $this->oRequetesSQL->addStamp([
             'stamp_name' => $oStamp->stamp_name, 
@@ -193,22 +199,20 @@ print_r($oStamp);
              'stamp_rareness_id' => $oStamp->stamp_rareness_id, 
              'stamp_auction_id' => $auction_id
           ]);
+        }
 
-if ($auction_id > 0 && $stamp_id > 0 && $img_id > 0) { 
+        if (count($erreursA) === 0 && $erreursI == '' && count($erreursS) === 0) { 
           $this->messageRetourAction = "Enchère ajoutée.";
           $this->listAuctions(); 
-        exit;
+          exit;
         } else {
           $this->classRetour = "erreur";
           $this->messageRetourAction = "Ajout non effectué.";
         }
-        }
-
-        
         
       }
-    }
-    
+    } 
+    //}  
     (new Vue)->generer('vAuctionAdd',
             array(
               'titre'       => 'Ajouter une enchère',
@@ -246,7 +250,7 @@ if ($auction_id > 0 && $stamp_id > 0 && $img_id > 0) {
           $this->classRetour = "erreur";
           $this->messageRetourAction = "modification de l'user numéro $this->user_id non effectuée.";
         }
-        $this->listerUsers();
+        //$this->listerUsers();
         exit;
       }
 
@@ -275,7 +279,7 @@ if ($auction_id > 0 && $stamp_id > 0 && $img_id > 0) {
       $this->classRetour = "erreur";
       $this->messageRetourAction = "Suppression de l'user numéro $this->user_id non effectuée.";
     }
-    $this->listerUsers();
+   // $this->listerUsers();
   }
 
   
