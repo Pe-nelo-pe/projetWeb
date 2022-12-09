@@ -1,0 +1,24 @@
+
+  #modaleSuppression {
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 0 8px #777;
+  }
+  #modaleSuppression p {
+    padding: 10px 20px;
+    font-size: 24px;
+  }
+  #modaleSuppression .actions {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0 10px;
+  }
+  #modaleSuppression button {
+    width: auto;
+    margin: 0 30px;
+    padding: 5px 20px;
+    cursor: pointer;
+  }
+  #modaleSuppression::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+  }

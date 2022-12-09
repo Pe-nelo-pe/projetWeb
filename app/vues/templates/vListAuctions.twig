@@ -31,7 +31,7 @@
               <div>
                 <a href="" class=" button">Modifier</a>
                 <br>
-                <a href="auctions?entite=auction&action=d&auction_id={{ auction.auction_id }}" class=" button">Supprimer</a>
+                <a data-href="auctions?entite=auction&action=d&auction_id={{ auction.auction_id }}" class=" button confirmer">Supprimer</a>
               </div>
             </div>
           </div>
@@ -44,4 +44,4 @@
   {% endfor %}
   </div>
 </section> 
-
+{{ include("modaleSuppression.twig") }}

@@ -168,7 +168,7 @@ class Session extends Routeur {
 
     //$users = $this->oRequetesSQL->getUsers();
 
-    (new Vue)->generer('accueil',
+    (new Vue)->generer('welcomeUser',
             array(
               'oUser'               => $this->oUser,
               'titre'               => 'Accueil',

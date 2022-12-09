@@ -1,9 +1,9 @@
-document.querySelectorAll('.confirmer').forEach(e => e.onclick = afficherFenetreModale);
+document.querySelectorAll('.confirmer').forEach(e => e.onclick = deleteModale);
 
 /**
  * Affichage d'une fenêtre modale
  */
-function afficherFenetreModale() {
+function deleteModale() {
   let locationHref = () => {location.href = this.dataset.href};
   let annuler      = () => {document.getElementById('modaleSuppression').close()}; 
   document.querySelector('#modaleSuppression .OK').onclick = locationHref;

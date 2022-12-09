@@ -70,12 +70,12 @@ class Auctions extends Routeur {
       $user = $this->oUser = $_SESSION['oUser'];
     }
 //var_dump($this->oUser);
-//var_dump($user->user_id ) ;
-    $auctions = $this->oRequetesSQL->getAuctionsByUser($user->user_id);
+$auctions = $this->oRequetesSQL->getAuctionsByUser($user->user_id);
+
 
     (new Vue)->generer('vListAuctions',
             array(
-              'oUser'        => $this->oUser,
+              'user'        => $user,
               'titre'               => 'Liste de vos enchères',
               'auctions'        => $auctions,
               'classRetour'         => $this->classRetour, 
@@ -109,7 +109,7 @@ class Auctions extends Routeur {
    */
   public function addAuction() {
     if (isset($_SESSION['oUser'])) {
-     $this->oUser = $_SESSION['oUser'];
+     $user = $this->oUser = $_SESSION['oUser'];
     }
     $user = $this->oUser;
  
@@ -214,19 +214,8 @@ class Auctions extends Routeur {
           'auction_user_id' => $user->user_id,
           'auction_status_id' => $oAuction->auction_status_id
         ]);
-        $nom_fichier = $_FILES['userfile']['name'];
-        $fichier = $_FILES['userfile']['tmp_name'];
 
-        $url_img = "assets/imgs/stamps/".$nom_fichier;
-        
-        if(move_uploaded_file($fichier, $url_img)){
-          $img_id = $this->oRequetesSQL->addImg([
-            'image_link' => $url_img
-          ]);
-        }
-//print_r($stamp);
-//die;
-        $stamp_id = $this->oRequetesSQL->addStamp([
+         $stamp_id = $this->oRequetesSQL->addStamp([
           'stamp_name' => $oStamp->stamp_name, 
           'stamp_description' => $oStamp->stamp_description,  
           'stamp_price' => $oStamp->stamp_price, 
@@ -234,13 +223,28 @@ class Auctions extends Routeur {
           'stamp_certified' => $oStamp->stamp_certified, 
           'stamp_format' => $oStamp->stamp_format, 
           'stamp_color' => $oStamp->stamp_color, 
-          'stamp_location_id' => $oStamp->stamp_location_id, 
-          'stamp_image_id' => $img_id, 
+          'stamp_location_id' => $oStamp->stamp_location_id,  
           'stamp_condition_id' => $oStamp->stamp_condition_id,
           'stamp_rareness_id' => $oStamp->stamp_rareness_id, 
-          'stamp_auction_id' => $auction_id
+          'stamp_auction_id' => $auction_id,
+          'stamp_user_id' => $user->user_id,
         ]);
 
+
+        $nom_fichier = $_FILES['userfile']['name'];
+        $fichier = $_FILES['userfile']['tmp_name'];
+
+        $url_img = "assets/imgs/stamps/".$nom_fichier;
+        
+        if(move_uploaded_file($fichier, $url_img)){
+          $img_id = $this->oRequetesSQL->addImg([
+            'image_link' => $url_img,
+            'image_stamp_id'=> $stamp_id
+          ]);
+        }
+//print_r($stamp);
+//die;
+       
           
          // if ($auction_id > 0  && $stamp_id > 0 && $img_id > 0) { 
             $this->messageRetourAction = "Enchère ajoutée.";
@@ -312,22 +316,24 @@ class Auctions extends Routeur {
   }
   
   /**
-   * Supprimer un user identifié par sa clé dans la propriété user_id
+   * Supprimer une enchère par sa clé dans la propriété user_id
    */
   public function deleteAuction() {
 
     if (isset($_SESSION['oUser'])) {
      $this->oUser = $_SESSION['oUser'];
-    }
 
-
-    if ($this->oRequetesSQL->deleteAuction($this->auction_id)) {
+     if ($this->oRequetesSQL->deleteAuction($this->auction_id)) {
       $this->messageRetourAction = "Suppression du lot $this->auction_id effectuée.";
     } else {
       $this->classRetour = "erreur";
       $this->messageRetourAction = "Suppression du lot $this->auction_id non effectuée.";
     }
     $this->listAuctionsByUser();
+    }
+
+
+    
   }
 
   

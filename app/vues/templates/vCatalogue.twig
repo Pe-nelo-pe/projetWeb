@@ -47,7 +47,7 @@
       {% for auction in auctions%}
         <article class="card ">
           <div class="header">
-            <h5>{{auction.auction_id}}</h5>
+            <h5>Lot #{{auction.auction_id}}</h5>
             <div>
               <small>{{auction.location_name}}</small> 
               <small>{% if auction.stamp_date != 0000 %}{{auction.stamp_date}} {% endif %}</small> 

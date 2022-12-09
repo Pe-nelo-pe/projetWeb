@@ -180,13 +180,16 @@ class RequetesSQL extends RequetesPDO {
   }
 
   /**
-   * Supprimer un utilisateur
-   * @param int $user_id clé primaire
+   * Supprimer une enchère
+   * @param int $auction_id clé primaire
    * @return boolean true si suppression effectuée, false sinon
    */ 
   public function deleteAuction($auction_id) {
     $this->sql = '
-      DELETE FROM auctions WHERE auction_id = :auction_id';
+      DELETE FROM auctions 
+      WHERE auction_id = :auction_id
+       ';
+
     return $this->CUDLigne(['auction_id' => $auction_id]); 
   }
 
@@ -201,8 +204,13 @@ class RequetesSQL extends RequetesPDO {
   }
 
    public function addStamp($champs) {
-    $this->sql = ' INSERT INTO stamps SET stamp_name = :stamp_name, stamp_description = :stamp_description,  stamp_price = :stamp_price, stamp_date = :stamp_date, stamp_certified =:stamp_certified, stamp_format = :stamp_format, stamp_color = :stamp_color, stamp_location_id = :stamp_location_id, stamp_image_id = :stamp_image_id, stamp_condition_id = :stamp_condition_id, stamp_rareness_id = :stamp_rareness_id, stamp_auction_id = :stamp_auction_id ';
+    $this->sql = ' INSERT INTO stamps SET stamp_name = :stamp_name, stamp_description = :stamp_description,  stamp_price = :stamp_price, stamp_date = :stamp_date, stamp_certified =:stamp_certified, stamp_format = :stamp_format, stamp_color = :stamp_color, stamp_location_id = :stamp_location_id, stamp_condition_id = :stamp_condition_id, stamp_rareness_id = :stamp_rareness_id, stamp_auction_id = :stamp_auction_id, stamp_user_id = :stamp_user_id ';
     return $this->CUDLigne($champs); 
+  }
+
+  public function addImg($champs){
+    $this->sql = ' INSERT INTO images SET image_link =:image_link, image_stamp_id = :image_stamp_id';
+    return $this->CUDLigne($champs);
   }
 
   public function getAuctionsByUser($user_id){
@@ -212,7 +220,7 @@ class RequetesSQL extends RequetesPDO {
        left join locations on stamp_location_id = location_id
        left join conditions on stamp_condition_id = condition_id
        left join rareness on stamp_rareness_id = rareness_id
-       left join images on stamp_image_id = image_id
+       left join images on image_stamp_id = stamp_id
        WHERE auction_user_id = :user_id 
        order by auction_id DESC
        ';
@@ -221,12 +229,12 @@ class RequetesSQL extends RequetesPDO {
 
     public function getAuctions(){
     $this->sql = '
-       SELECT * FROM auctions
+       (SELECT * FROM auctions
        left join stamps on auction_id = stamp_auction_id
        left join locations on stamp_location_id = location_id
        left join conditions on stamp_condition_id = condition_id
-       left join rareness on stamp_rareness_id = rareness_id
-       left join images on stamp_image_id = image_id
+       left join rareness on stamp_rareness_id = rareness_id_
+       left join images on image_stamp_id = stamp_id
 
        ';
     return $this->getLignes();
@@ -240,7 +248,8 @@ class RequetesSQL extends RequetesPDO {
        left join locations on stamp_location_id = location_id
        left join conditions on stamp_condition_id = condition_id
        left join rareness on stamp_rareness_id = rareness_id
-       left join images on stamp_image_id = image_id
+      left join images on image_stamp_id = stamp_id
+       where auction_status_id = 2
       LIMIT 3
        ';
     return $this->getLignes();
@@ -270,10 +279,7 @@ class RequetesSQL extends RequetesPDO {
 
 
   
-   public function addImg($champs){
-    $this->sql = ' INSERT INTO images SET image_link =:image_link';
-    return $this->CUDLigne($champs);
-  }
+ 
 
   
 }
