@@ -38,7 +38,7 @@
           <div class="content">
 
             <div class="img-name">
-              <a href="#">
+              <a href="auctions?entite=auction&action=sd&auction_id={{ auction.auction_id }}">
                 
                 <img src="{{auction.image_link}}" alt="">
                 <h4>{{auction.auction_name}}</h4>
@@ -53,7 +53,7 @@
                 </div>
               </div>
               <div>
-                <button class=" bet {% if session.oUser is defined %}button {% else %} button-inactif {% endif %}">Mise rapide</button>
+                <button class=" bid {% if session.oUser is defined %}button {% else %} button-inactif {% endif %}" data-href="bids?entite=bid&action=b&auction_id={{ auction.auction_id }}">Mise rapide</button>
               </div>
             </div>
           </div>
@@ -85,7 +85,7 @@
                 </div>
               </div>
               <div>
-                <button class="button bet">Mise rapide</button>
+                <button class="button bid">Mise rapide</button>
               </div>
             </div>
           </div>
@@ -117,7 +117,7 @@
                 </div>
               </div>
               <div>
-                <button class="button bet">Mise rapide</button>
+                <button class="button bid">Mise rapide</button>
               </div>
             </div>
           </div>
@@ -149,7 +149,7 @@
                 </div>
               </div>
               <div>
-                <button class="button bet">Mise rapide</button>
+                <button class="button bid">Mise rapide</button>
               </div>
             </div>
           </div>
@@ -252,3 +252,5 @@
       <img src="assets/imgs/wax-seal.webp" alt="">
       <h2>Votre satisfaction, notre mission</h2>
     </section>
+
+{{ include("modaleBid.twig") }}

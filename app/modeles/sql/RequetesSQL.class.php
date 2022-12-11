@@ -209,7 +209,7 @@ class RequetesSQL extends RequetesPDO {
   }
 
   public function addImg($champs){
-    $this->sql = ' INSERT INTO images SET image_link =:image_link, image_stamp_id = :image_stamp_id';
+    $this->sql = ' INSERT INTO images SET image_link =:image_link, image_name = :image_name, image_stamp_id = :image_stamp_id';
     return $this->CUDLigne($champs);
   }
 
@@ -222,6 +222,7 @@ class RequetesSQL extends RequetesPDO {
        left join rareness on stamp_rareness_id = rareness_id
        left join images on image_stamp_id = stamp_id
        WHERE auction_user_id = :user_id 
+       group by stamp_id
        order by auction_id DESC
        ';
     return $this->getLignes(['user_id' => $user_id]);
@@ -229,13 +230,13 @@ class RequetesSQL extends RequetesPDO {
 
     public function getAuctions(){
     $this->sql = '
-       (SELECT * FROM auctions
+       SELECT * FROM auctions
        left join stamps on auction_id = stamp_auction_id
        left join locations on stamp_location_id = location_id
        left join conditions on stamp_condition_id = condition_id
-       left join rareness on stamp_rareness_id = rareness_id_
+       left join rareness on stamp_rareness_id = rareness_id
        left join images on image_stamp_id = stamp_id
-
+      group by stamp_id   
        ';
     return $this->getLignes();
   }
@@ -253,6 +254,35 @@ class RequetesSQL extends RequetesPDO {
       LIMIT 3
        ';
     return $this->getLignes();
+  }
+
+    public function getAuction($auction_id){
+    $this->sql = '
+      SELECT * FROM auctions
+      left join stamps on auction_id = stamp_auction_id
+      left join locations on stamp_location_id = location_id
+      left join conditions on stamp_condition_id = condition_id
+      left join rareness on stamp_rareness_id = rareness_id
+      left join images on image_stamp_id = stamp_id
+      WHERE auction_id = :auction_id
+     
+       ';
+    return $this->getLignes(['auction_id' => $auction_id]);
+  }
+
+
+  public function addBid($champs){
+    $this->sql = 'INSERT INTO bids 
+    SET bid_amount = :bid_amount, bid_user_id = :bid_user_id,  bid_auction_id = :bid_auction_id';
+    return $this->CUDLigne($champs);
+  }
+
+   public function getBid($auction_id){
+    $this->sql = 'SELECT * from bids 
+    inner join users on bid_user_id = user_id
+    inner join auctions on bid_auction_id = :auction_id
+    ';
+    return $this->CUDLigne(['auction_id' => $auction_id]);
   }
 
 

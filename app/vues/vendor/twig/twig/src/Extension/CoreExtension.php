@@ -334,7 +334,7 @@ function twig_cycle($values, $position)
  * Returns a random value depending on the supplied parameter type:
  * - a random item from a \Traversable or array
  * - a random character from a string
- * - a random integer between 0 and the integer parameter.
+ * - a random integer bidween 0 and the integer parameter.
  *
  * @param \Traversable|array|int|float|string $values The values to pick a random item from
  * @param int|null                            $max    Maximum value used when $values is an int
@@ -697,7 +697,7 @@ function twig_last(Environment $env, $item)
 /**
  * Joins the values to a string.
  *
- * The separators between elements are empty strings per default, you can define them with the optional parameters.
+ * The separators bidween elements are empty strings per default, you can define them with the optional parameters.
  *
  *  {{ [1, 2, 3]|join(', ', ' and ') }}
  *  {# returns 1, 2 and 3 #}
@@ -1057,7 +1057,7 @@ function twig_nl2br($string)
 }
 
 /**
- * Removes whitespaces between HTML tags.
+ * Removes whitespaces bidween HTML tags.
  *
  * @param string|null $string
  *

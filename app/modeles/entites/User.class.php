@@ -142,6 +142,8 @@ class User
   public function setUser_password($user_password) {
    unset($this->erreurs['user_password']);
 
+   $user_password = trim($user_password);
+   
     $regex = "/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/";
 
     if (!preg_match($regex, $user_password)) {

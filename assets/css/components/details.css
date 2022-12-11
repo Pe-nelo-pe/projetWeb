@@ -62,7 +62,7 @@
   padding: 0 10px;
 }
 
-.details .img-bet{
+.details .img-bid{
   display: flex;
   gap: 25px;
   margin-bottom: 25px;
@@ -89,7 +89,7 @@
 }
 
 
-.details .img-bet picture {
+.details .img-bid picture {
 	position: fixed;
 	width: 50%;
   max-width: 750px;
@@ -104,18 +104,18 @@
   min-width: 50%;
 }
 
-.details .info-bet div{
+.details .info-bid div{
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 10px;
 }
 
-.details .info-bet p:nth-of-type(even){
+.details .info-bid p:nth-of-type(even){
   font-weight: 900;
 }
 
-.details .info-bet input[type=number]{
+.details .info-bid input[type=number]{
   max-width: 50%;
   min-width: 0;
 }
@@ -180,7 +180,7 @@
 
 @media screen and (max-width: 800px) {
 
-  .details .img-bet{
+  .details .img-bid{
     flex-direction: column;
   }
 

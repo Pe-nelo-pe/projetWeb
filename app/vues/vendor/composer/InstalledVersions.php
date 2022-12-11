@@ -298,7 +298,7 @@ class InstalledVersions
      * the data it needs from this class, then call reload() with
      * `require $CWD/vendor/composer/installed.php` (or similar) as input to make sure
      * the project in which it runs can then also use this class safely, without
-     * interference between PHPUnit's dependencies and the project's dependencies.
+     * interference bidween PHPUnit's dependencies and the project's dependencies.
      *
      * @param  array[] $data A vendor/composer/installed.php data set
      * @return void

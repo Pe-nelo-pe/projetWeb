@@ -7,6 +7,7 @@
 class Image
 {
   private $image_id;
+  private $image_name;
   private $image_link;
  
 
@@ -36,6 +37,7 @@ class Image
 
   // Getters explicites nécessaires au moteur de templates TWIG
   public function getImage_id()       { return $this->image_id; }
+  public function getImage_name()       { return $this->image_name; }
   public function getImage_link() { return $this->image_link; }
  
   
@@ -58,6 +60,16 @@ class Image
     
     $this->image_id = $image_id; 
   }    
+
+  /**
+   * Mutateur de la propriété user_id 
+   * @param int $user_id
+   * @return $this
+   */    
+  public function setImage_name($image_name) {
+    
+    $this->image_name = $image_name; 
+  }  
 
  /**
    * Mutateur de la propriété stamp_name 

@@ -34,7 +34,7 @@
 
 # 3.3.7 (2022-01-03)
 
-* Allow more null support when Twig expects a string (for better 8.1 support)
+* Allow more null support when Twig expects a string (for bidter 8.1 support)
 * Only use Commonmark extensions if markdown enabled
 
 # 3.3.6 (2022-01-03)
@@ -44,7 +44,7 @@
 # 3.3.5 (2022-01-03)
 
 * Allow CommonMark extensions to easily be added
-* Allow null when Twig expects a string (for better 8.1 support)
+* Allow null when Twig expects a string (for bidter 8.1 support)
 * Make some performance optimizations
 * Allow Symfony translation contract v3+
 
@@ -130,7 +130,7 @@
 
  * fixed number formatter in Intl extra extension when using a formatter prototype
 
-# 3.0.0-BETA1 (2019-11-11)
+# 3.0.0-bidA1 (2019-11-11)
 
  * removed the "if" condition support on the "for" tag
  * made the in, <, >, <=, >=, ==, and != operators more strict when comparing strings and integers/floats

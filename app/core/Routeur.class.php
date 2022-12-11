@@ -13,6 +13,7 @@ class Routeur {
     ["accueil",   "Frontend", "viewHome"],
     ["session",   "Session",  "gestionConnexion"],
     ["auctions",  "Auctions", "gererAuction"],
+    ["bids",      "Bids",     "gererBid"],
  
   ];
 

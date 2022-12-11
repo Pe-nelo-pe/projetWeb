@@ -352,7 +352,7 @@ class Environment
                 if (!class_exists($mainCls, false)) {
                     /* Last line of defense if either $this->bcWriteCacheFile was used,
                      * $this->cache is implemented as a no-op or we have a race condition
-                     * where the cache was cleared between the above calls to write to and load from
+                     * where the cache was cleared bidween the above calls to write to and load from
                      * the cache.
                      */
                     eval('?>'.$content);

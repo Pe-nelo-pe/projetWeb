@@ -189,7 +189,7 @@ CREATE TABLE IF NOT EXISTS `projetWeb`.`bids` (
   `bid_amount` DECIMAL NOT NULL,
   `bid_user_id` INT NOT NULL,
   `bid_auction_id` INT NOT NULL,
-  UNIQUE INDEX `bet_id_UNIQUE` (`bid_id` ASC)  ,
+  UNIQUE INDEX `bid_id_UNIQUE` (`bid_id` ASC)  ,
   INDEX `fk_bids_users1_idx` (`bid_user_id` ASC)  ,
   INDEX `fk_bids_auctions1_idx` (`bid_auction_id` ASC)  ,
   CONSTRAINT `fk_bids_users1`

@@ -1,18 +1,18 @@
 window.addEventListener("load", function(){
 
-    const modalBet = document.querySelectorAll(".fast-bet");
-    const btnBet = document.querySelectorAll(".bet");
+//     const modalbid = document.querySelectorAll(".fast-bid");
+//     const btnbid = document.querySelectorAll(".bid");
 
-    modalBet.forEach(modal => {
-        btnBet.forEach(btn => {
-            btn.addEventListener('click', () => {
-            if (typeof modal.showModal === "function") {
-                modal.showModal();
-            }
-        });
-        });
+//     modalbid.forEach(modal => {
+//         btnbid.forEach(btn => {
+//             btn.addEventListener('click', () => {
+//             if (typeof modal.showModal === "function") {
+//                 modal.showModal();
+//             }
+//         });
+//         });
         
-   })
+//    })
 
 
    const catalogue = document.querySelector("#catalogue")
