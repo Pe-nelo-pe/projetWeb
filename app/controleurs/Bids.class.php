@@ -4,7 +4,7 @@
  * Classe Contrôleur des requêtes de l'application admin
  */
 
-class Auctions extends Routeur {
+class Bids extends Routeur {
 
   private $entite;
   private $action;
@@ -15,8 +15,6 @@ class Auctions extends Routeur {
   private $methodes = [
     'bid' => [
       'b' => ['nom'=>'bid'],
-      
-  
     ]
   ];
     
@@ -50,40 +48,61 @@ public function gererBid() {
         throw new Exception("L'entité $this->entite n'existe pas.");
       }
     } else {
-      $this->catalogueAuctions();
+     // $this->catalogueAuctions();
     }
   }
 
+
+
   public function bid(){
+    $bid=[];
+    $erreurs = [];
+
     if (isset($_SESSION['oUser'])) {
       $user = $this->oUser = $_SESSION['oUser'];
       $auction = $this->oRequetesSQL->getAuction($this->auction_id);
+      $bids = $this->oRequetesSQL->getBids($this->auction_id);
 
-     if (count($_POST) !== 0) {
+      if (count($_POST) !== 0) {
+        
         $bid = $_POST;
+    
         $oBid = new Bid($bid); 
         $erreurs = $oBid->erreurs;
-        if (count($erreurs) === 0 ) { 
+        //print_r($oBid);
+        //die;
+        if (count($erreurs) === 0) { 
           $bid_id = $this->oRequetesSQL->addBid([
-          'bid_amount' => $oBid->bid_amount,
-          'bid_user_id' => $user->user_id,
-          'bid_auction_id' => $auction->auction_id
+            'bid_user_id'     => $user->user_id,
+            'bid_auction_id'  => $oBid->bid_auction_id,
+            'bid_amount'      => $oBid->bid_amount
+          
           ]);
+          $this->messageRetourAction = "Mise sur le lot ".$this->auction_id. " effectuée";
+          // $auction = new Auctions();
+          // $auction->singleDetails();
         }
+   
+        
+        
       }
-    echo "<pre>";
-    print_r($auction);
-    echo "</pre>";
-    (new Vue)->generer('modaleBid',
+    }
+    
+    (new Vue)->generer('vDetail',
             array(
-              'user'        => $user,
-              'bid'        => $bid,
-              
-              'auction'        => $auction,
-              'classRetour'         => $this->classRetour, 
+              'user'                => $user,
+              'bid'                 => $bid,
+              'erreurs'             => $erreurs,
+              'auction'             => $auction[0],
+              'bids'                => $bids,
               'messageRetourAction' => $this->messageRetourAction
             ),
             'gabarit-frontend');
-    }
+    
   }
+
+
+
+
+
 }

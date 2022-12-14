@@ -70,7 +70,7 @@ class User
    * @return $this
    */    
   public function setUser_id($user_id) {
-    $this->user_id = $user_id; // à remplacer avec des contrôles
+    $this->user_id = $user_id; 
   }    
 
   /**
@@ -130,7 +130,7 @@ class User
    * @return $this
    */    
   public function setUser_status_id($user_status_id) {
-    $this->user_status_id = $user_status_id; // à remplacer avec des contrôles
+    $this->user_status_id = $user_status_id; 
   }
 
 
@@ -153,7 +153,7 @@ class User
     $this->user_password = $user_password; 
     return $this;
 
-    $this->user_password = $user_password; // à remplacer avec des contrôles
+  
   }
 
   
@@ -163,7 +163,7 @@ class User
    * @return $this
    */    
   public function setUser_address($user_address) {
-    $this->user_address = $user_address; // à remplacer avec des contrôles
+    $this->user_address = $user_address; 
   }
 
   
@@ -173,7 +173,7 @@ class User
    * @return $this
    */    
   public function setUser_city($user_city) {
-    $this->user_city = $user_city; // à remplacer avec des contrôles
+    $this->user_city = $user_city; 
   }
 
   
@@ -183,7 +183,7 @@ class User
    * @return $this
    */    
   public function setUser_zipCode($user_zipCode) {
-    $this->user_zipCode = $user_zipCode; // à remplacer avec des contrôles
+    $this->user_zipCode = $user_zipCode; 
   }
 
 }

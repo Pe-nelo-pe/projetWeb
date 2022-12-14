@@ -14,13 +14,10 @@ class Admin extends Routeur {
 
   private $methodes = [
     'user' => [
-      //'l' => ['nom'=>'listerUsers', 'droits'=>[User::PROFIL_ADMINISTRATEUR]],
       'a' => ['nom'=>'ajouterUser', 'droits'=>[User::PROFIL_ADMINISTRATEUR]],
       'm' => ['nom'=>'modifierUser', 'droits'=>[User::PROFIL_ADMINISTRATEUR]],
       's' => ['nom'=>'supprimerUser', 'droits'=>[User::PROFIL_ADMINISTRATEUR]],
-      //'gf'=> ['nom'=>'gestionFilms', 'droits'=>[User::PROFIL_ADMINISTRATEUR, User::PROFIL_EDITEUR]],
       'd' => ['nom'=>'deconnecter'],
-      //'mmdp' => ['nom'=>'modificationMDP', 'droits'=>[User::PROFIL_ADMINISTRATEUR]],
     ]
   ];
     

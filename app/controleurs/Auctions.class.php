@@ -19,12 +19,13 @@ class Auctions extends Routeur {
       'u' => ['nom'=>'updateAuction' ],
       'd' => ['nom'=>'deleteAuction'],
       'c' => ['nom'=>'catalogueAuctions'],
+      'sd'=> ['nom'=>'singleDetails'],
   
     ]
   ];
     
 
-  private $classRetour = "fait";
+ 
   private $messageRetourAction = "";
 
   /**
@@ -54,7 +55,11 @@ class Auctions extends Routeur {
       } else {
         throw new Exception("L'entité $this->entite n'existe pas.");
       }
-    } else {
+    } elseif (!isset($_SESSION['oUser'])){
+      if (isset($this->methodes[$this->entite][$this->action])) {
+          $methode = $this->methodes[$this->entite][$this->action]['nom'];
+          $this->$methode();
+        }
       $this->catalogueAuctions();
     }
   }
@@ -63,22 +68,20 @@ class Auctions extends Routeur {
 
 
   /**
-   * Lister les users
+   * Lister les enchères d'un utilisateur
    */
   public function listAuctionsByUser() {
     if (isset($_SESSION['oUser'])) {
       $user = $this->oUser = $_SESSION['oUser'];
     }
-//var_dump($this->oUser);
-$auctions = $this->oRequetesSQL->getAuctionsByUser($user->user_id);
 
+    $auctions = $this->oRequetesSQL->getAuctionsByUser($user->user_id);
 
     (new Vue)->generer('vListAuctions',
             array(
-              'user'        => $user,
+              'user'                => $user,
               'titre'               => 'Liste de vos enchères',
-              'auctions'        => $auctions,
-              'classRetour'         => $this->classRetour, 
+              'auctions'            => $auctions,
               'messageRetourAction' => $this->messageRetourAction
             ),
             'gabarit-frontend');
@@ -86,7 +89,7 @@ $auctions = $this->oRequetesSQL->getAuctionsByUser($user->user_id);
 
 
     /**
-   * Lister les users
+   * Lister les enchères du catalogue
    */
   public function catalogueAuctions() {
     if (isset($_SESSION['oUser'])) {
@@ -95,11 +98,13 @@ $auctions = $this->oRequetesSQL->getAuctionsByUser($user->user_id);
    
     $auctions = $this->oRequetesSQL->getAuctions();
 
+   
+
     (new Vue)->generer('vCatalogue',
             array(
-              'oUser'        => $this->oUser,
-              //'titre'               => 'Liste de vos enchères',
-              'auctions'        => $auctions
+              'user'       => $user,
+              'auctions'   => $auctions,
+              
             ),
             'gabarit-frontend');
   }
@@ -113,8 +118,6 @@ $auctions = $this->oRequetesSQL->getAuctionsByUser($user->user_id);
     if (isset($_SESSION['oUser'])) {
      $user = $this->oUser = $_SESSION['oUser'];
     }
-    $user = $this->oUser;
-
   
     $location = $this->oRequetesSQL->getLocations();
     $rareness = $this->oRequetesSQL->getRareness();
@@ -133,12 +136,12 @@ $auctions = $this->oRequetesSQL->getAuctionsByUser($user->user_id);
 
     if (count($_POST) !== 0) {
 
-       //var_dump($_POST);
-  
-       //die;
+      
+      //die;
       $stamp = array_splice($_POST, 7);
       $auction = $_POST;
-   
+      
+    
 // !!!!!!changer pour nom de champs
       $oAuction = new Auction($auction); 
       $erreursA = $oAuction->erreurs; 
@@ -149,54 +152,6 @@ $auctions = $this->oRequetesSQL->getAuctionsByUser($user->user_id);
       $erreursS = $oStamp->erreurs;
 
 
-//       if (count($erreursA) === 0) { 
-//         $auction_id = $this->oRequetesSQL->addAuction([
-//           'auction_name'    => $oAuction->auction_name,
-//           'auction_description' => $oAuction->auction_description,
-//           'auction_startDate' => $oAuction->auction_startDate,
-//           'auction_finishDate' => $oAuction->auction_finishDate,
-//           'auction_price' => $oAuction->auction_price,
-//           'auction_user_id' => $user->user_id,
-//           'auction_status_id' => $oAuction->auction_status_id
-//         ]);
-
-      
-
-//         if($_FILES['userfile']['error'] === 4){
-//           $erreursI = 'Champs obligatoire';
-
-//         } else {
-
-//           $nom_fichier = $_FILES['userfile']['name'];
-//           $fichier = $_FILES['userfile']['tmp_name'];
-
-//           $url_img = "assets/imgs/stamps/".$nom_fichier;
-//           //Ajouter stamptime pour permettre d'avoir des images avec le mm nom
-//           if(move_uploaded_file($fichier, $url_img)){
-//              $img_id = $this->oRequetesSQL->addImg([
-//               'image_link' => $url_img
-//             ]);
-//           }  
-     
-//         }
-
-
-//         if (count($erreursS) === 0) { 
-//           $stamp_id = $this->oRequetesSQL->addStamp([
-//             'stamp_name' => $oStamp->stamp_name, 
-//             'stamp_description' => $oStamp->stamp_description,  
-//             'stamp_price' => $oStamp->stamp_price, 
-//             'stamp_date' => $oStamp->stamp_date,
-//              'stamp_certified' => $oStamp->stamp_certified, 
-//              'stamp_format' => $oStamp->stamp_format, 
-//              'stamp_color' => $oStamp->stamp_color, 
-//              'stamp_location_id' => $oStamp->stamp_location_id, 
-//              'stamp_image_id' => $img_id, 
-//              'stamp_condition_id' => $oStamp->stamp_condition_id,
-//              'stamp_rareness_id' => $oStamp->stamp_rareness_id, 
-//              'stamp_auction_id' => $auction_id
-//           ]);
-//         }
 
       if($_FILES['userfile']['error'] === 4){
           $erreursI = 'Champs obligatoire';
@@ -206,28 +161,28 @@ $auctions = $this->oRequetesSQL->getAuctionsByUser($user->user_id);
       if (count($erreursA) === 0 && count($erreursS) === 0 && $_FILES['userfile']['error'] != 4) { 
         
         $auction_id = $this->oRequetesSQL->addAuction([
-          'auction_name'    => $oAuction->auction_name,
+          'auction_name'        => $oAuction->auction_name,
           'auction_description' => $oAuction->auction_description,
-          'auction_startDate' => $oAuction->auction_startDate,
-          'auction_finishDate' => $oAuction->auction_finishDate,
-          'auction_price' => $oAuction->auction_price,
-          'auction_user_id' => $user->user_id,
-          'auction_status_id' => $oAuction->auction_status_id
+          'auction_startDate'   => $oAuction->auction_startDate,
+          'auction_finishDate'  => $oAuction->auction_finishDate,
+          'auction_price'       => $oAuction->auction_price,
+          'auction_user_id'     => $user->user_id,
+          'auction_status_id'   => $oAuction->auction_status_id
         ]);
 
          $stamp_id = $this->oRequetesSQL->addStamp([
           'stamp_name' => $oStamp->stamp_name, 
-          'stamp_description' => $oStamp->stamp_description,  
-          'stamp_price' => $oStamp->stamp_price, 
-          'stamp_date' => $oStamp->stamp_date,
-          'stamp_certified' => $oStamp->stamp_certified, 
-          'stamp_format' => $oStamp->stamp_format, 
-          'stamp_color' => $oStamp->stamp_color, 
-          'stamp_location_id' => $oStamp->stamp_location_id,  
+          'stamp_description'  => $oStamp->stamp_description,  
+          'stamp_price'        => $oStamp->stamp_price, 
+          'stamp_date'         => $oStamp->stamp_date,
+          'stamp_certified'    => $oStamp->stamp_certified, 
+          'stamp_format'       => $oStamp->stamp_format, 
+          'stamp_color'        => $oStamp->stamp_color, 
+          'stamp_location_id'  => $oStamp->stamp_location_id,  
           'stamp_condition_id' => $oStamp->stamp_condition_id,
-          'stamp_rareness_id' => $oStamp->stamp_rareness_id, 
-          'stamp_auction_id' => $auction_id,
-          'stamp_user_id' => $user->user_id,
+          'stamp_rareness_id'  => $oStamp->stamp_rareness_id, 
+          'stamp_auction_id'   => $auction_id,
+          'stamp_user_id'      => $user->user_id,
         ]);
 
 
@@ -238,8 +193,8 @@ $auctions = $this->oRequetesSQL->getAuctionsByUser($user->user_id);
         
         if(move_uploaded_file($fichier, $url_img)){
           $img_id = $this->oRequetesSQL->addImg([
-            'image_link' => $url_img,
-            'image_name' => $nom_fichier,
+            'image_link'    => $url_img,
+            'image_name'    => $nom_fichier,
             'image_stamp_id'=> $stamp_id
           ]);
 
@@ -251,8 +206,8 @@ $auctions = $this->oRequetesSQL->getAuctionsByUser($user->user_id);
         
         if(move_uploaded_file($fichier, $url_img)){
           $img_id = $this->oRequetesSQL->addImg([
-            'image_link' => $url_img,
-            'image_name' => $nom_fichier,
+            'image_link'    => $url_img,
+            'image_name'    => $nom_fichier,
             'image_stamp_id'=> $stamp_id
           ]);
 
@@ -264,8 +219,8 @@ $auctions = $this->oRequetesSQL->getAuctionsByUser($user->user_id);
         
         if(move_uploaded_file($fichier, $url_img)){
           $img_id = $this->oRequetesSQL->addImg([
-            'image_link' => $url_img,
-            'image_name' => $nom_fichier,
+            'image_link'    => $url_img,
+            'image_name'    => $nom_fichier,
             'image_stamp_id'=> $stamp_id
           ]);
         }
@@ -277,26 +232,18 @@ $auctions = $this->oRequetesSQL->getAuctionsByUser($user->user_id);
         
         if(move_uploaded_file($fichier, $url_img)){
           $img_id = $this->oRequetesSQL->addImg([
-            'image_link' => $url_img,
-            'image_name' => $nom_fichier,
+            'image_link'    => $url_img,
+            'image_name'    => $nom_fichier,
             'image_stamp_id'=> $stamp_id
           ]);
         }
 
-          
-         // if ($auction_id > 0  && $stamp_id > 0 && $img_id > 0) { 
             $this->messageRetourAction = "Enchère ajoutée.";
             $this->listAuctionsByUser(); 
             exit;
-          //} else {
-         //   $this->classRetour = "erreur";
-         //  $this->messageRetourAction = "Ajout non effectué.";
-         // }
-          
         }
       }
-    //} 
-    //}  
+ 
     (new Vue)->generer('vAuctionAdd',
             array(
               'titre'       => 'Ajouter une enchère',
@@ -312,7 +259,8 @@ $auctions = $this->oRequetesSQL->getAuctionsByUser($user->user_id);
             ),
             'gabarit-frontend');
   }
-      
+     
+  
   /**
    * Modifier une enchère par sa clé dans la propriété auction_id
    */
@@ -320,154 +268,85 @@ $auctions = $this->oRequetesSQL->getAuctionsByUser($user->user_id);
     if (isset($_SESSION['oUser'])) {
      $user = $this->oUser = $_SESSION['oUser'];
     }
-    //$user = $this->oUser;
-
-  
+ 
+    $auctions  = $this->oRequetesSQL->getAuction($this->auction_id);
+    $dataAuction = $auctions[0];
+   
     $location = $this->oRequetesSQL->getLocations();
     $rareness = $this->oRequetesSQL->getRareness();
     $condition = $this->oRequetesSQL->getConditions();
     
     
-    $auction  = [];
+ 
     $stamp = [];
     $erreursA = [];
     $erreursS = [];
-    $erreursI = "";
 
-    $auction_id = [];
-    $stamp_id = [];
-    $img_id = [];
+  
 
     if (count($_POST) !== 0) {
-//       $stamp = array_splice($_POST, 7);
-//       $auction = $_POST;
-// // !!!!!!changer pour nom de champs
-//       $oAuction = new Auction($auction); 
-//       $erreursA = $oAuction->erreurs; 
+      $stamp = array_splice($_POST, 7);
+      $auction = $_POST;
+        
+// !!!!!!changer pour nom de champs
+      $oAuction = new Auction($auction); 
+      $erreursA = $oAuction->erreurs; 
 
      
 
-//       $oStamp = new Stamp($stamp); 
-//       $erreursS = $oStamp->erreurs;
+      $oStamp = new Stamp($stamp); 
+      $erreursS = $oStamp->erreurs;
 
-      // if($_FILES['userfile']['error'] === 4){
-      //     $erreursI = 'Champs obligatoire';
+     
 
-      //   }
-
-      // if (count($erreursA) === 0 && count($erreursS) === 0 && $_FILES['userfile']['error'] != 4) { 
+      if (count($erreursA) === 0 && count($erreursS) === 0) { 
         
-      //   //$auction_id = 
-      //   $this->oRequetesSQL->updateAuction([
-      //     'auction_name'    => $oAuction->auction_name,
-      //     'auction_description' => $oAuction->auction_description,
-      //     'auction_startDate' => $oAuction->auction_startDate,
-      //     'auction_finishDate' => $oAuction->auction_finishDate,
-      //     'auction_price' => $oAuction->auction_price,
-      //     'auction_user_id' => $user->user_id,
-      //     'auction_status_id' => $oAuction->auction_status_id
-      //   ]);
+        $this->oRequetesSQL->updateAuction([
+          'auction_id'          => $this->auction_id,
+          'auction_name'        => $oAuction->auction_name,
+          'auction_description' => $oAuction->auction_description,
+          'auction_startDate'   => $oAuction->auction_startDate,
+          'auction_finishDate'  => $oAuction->auction_finishDate,
+          'auction_price'       => $oAuction->auction_price,
+          'auction_user_id'     => $user->user_id,
+          'auction_status_id'   => $oAuction->auction_status_id
+        ]);
 
-      //    //$stamp_id = 
-      //    $this->oRequetesSQL->updateStamp([
-      //     'stamp_name' => $oStamp->stamp_name, 
-      //     'stamp_description' => $oStamp->stamp_description,  
-      //     'stamp_price' => $oStamp->stamp_price, 
-      //     'stamp_date' => $oStamp->stamp_date,
-      //     'stamp_certified' => $oStamp->stamp_certified, 
-      //     'stamp_format' => $oStamp->stamp_format, 
-      //     'stamp_color' => $oStamp->stamp_color, 
-      //     'stamp_location_id' => $oStamp->stamp_location_id,  
-      //     'stamp_condition_id' => $oStamp->stamp_condition_id,
-      //     'stamp_rareness_id' => $oStamp->stamp_rareness_id, 
-      //     'stamp_auction_id' => $auction_id,
-      //     'stamp_user_id' => $user->user_id,
-      //   ]);
+         $this->oRequetesSQL->updateStamp([
+          'stamp_id'          => $dataAuction['stamp_id'], 
+          'stamp_name'        => $oStamp->stamp_name, 
+          'stamp_description' => $oStamp->stamp_description,  
+          'stamp_price'       => $oStamp->stamp_price, 
+          'stamp_date'        => $oStamp->stamp_date,
+          'stamp_certified'   => $oStamp->stamp_certified, 
+          'stamp_format'      => $oStamp->stamp_format, 
+          'stamp_color'       => $oStamp->stamp_color, 
+          'stamp_location_id' => $oStamp->stamp_location_id,  
+          'stamp_condition_id'=> $oStamp->stamp_condition_id,
+          'stamp_rareness_id' => $oStamp->stamp_rareness_id, 
+          'stamp_auction_id'  => $this->auction_id,
+          'stamp_user_id'     => $user->user_id,
+        ]);
 
+          $this->messageRetourAction = "Modifications faites.";
+          $this->listAuctionsByUser(); 
+          exit; 
+        }
 
-      //   $nom_fichier = $_FILES['userfile']['name'];
-      //   $fichier = $_FILES['userfile']['tmp_name'];
-
-      //   $url_img = "assets/imgs/stamps/".$nom_fichier;
-        
-      //   if(move_uploaded_file($fichier, $url_img)){
-      //     //$img_id = 
-      //     $this->oRequetesSQL->updateImg([
-      //       'image_link' => $url_img,
-      //       'image_stamp_id'=> $stamp_id
-      //     ]);
-
-      //   }
-      //   $nom_fichier = $_FILES['userfile2']['name'];
-      //   $fichier = $_FILES['userfile2']['tmp_name'];
-
-      //   $url_img = "assets/imgs/stamps/".$nom_fichier;
-        
-      //   if(move_uploaded_file($fichier, $url_img)){
-      //     //$img_id = 
-      //     $this->oRequetesSQL->updateImg([
-      //       'image_link' => $url_img,
-      //       'image_stamp_id'=> $stamp_id
-      //     ]);
-
-      //   } 
-      //   $nom_fichier = $_FILES['userfile3']['name'];
-      //   $fichier = $_FILES['userfile3']['tmp_name'];
-
-      //   $url_img = "assets/imgs/stamps/".$nom_fichier;
-        
-      //   if(move_uploaded_file($fichier, $url_img)){
-      //     //$img_id = 
-      //     $this->oRequetesSQL->updateImg([
-      //       'image_link' => $url_img,
-      //       'image_stamp_id'=> $stamp_id
-      //     ]);
-      //   }
-          
-      //   $nom_fichier = $_FILES['userfile4']['name'];
-      //   $fichier = $_FILES['userfile4']['tmp_name'];
-
-      //   $url_img = "assets/imgs/stamps/".$nom_fichier;
-        
-      //   if(move_uploaded_file($fichier, $url_img)){
-      //     //$img_id = 
-      //     $this->oRequetesSQL->updateImg([
-      //       'image_link' => $url_img,
-      //       'image_stamp_id'=> $stamp_id
-      //     ]);
-      //   }
-
-       
-          
-      //    // if ($auction_id > 0  && $stamp_id > 0 && $img_id > 0) { 
-      //       $this->messageRetourAction = "Modifications faites.";
-      //       $this->listAuctionsByUser(); 
-      //       exit;
-      //     //} else {
-      //    //   $this->classRetour = "erreur";
-      //    //  $this->messageRetourAction = "Ajout non effectué.";
-      //    // }
-          
-      //   }
     }else {
       $auctions  = $this->oRequetesSQL->getAuction($this->auction_id);
     }
 
- echo '<pre>';
- print_r($auctions);
- echo '</pre>';
     (new Vue)->generer('vUpdateAuction',
             array(
               'titre'       => 'Modifier une enchère',
               'user'        => $user,
-              'auctions'     => $auctions,
               'auction'     => $auctions[0],
               'stamp'       => $stamp,
               'locations'   => $location,
               'conditions'  => $condition,
               'rareness'    => $rareness,
               'erreursA'    => $erreursA,
-              'erreursI'    => $erreursI,
               'erreursS'    => $erreursS
             ),
             'gabarit-frontend');
@@ -476,7 +355,7 @@ $auctions = $this->oRequetesSQL->getAuctionsByUser($user->user_id);
 
 
   /**
-   * Supprimer une enchère par sa clé dans la propriété user_id
+   * Supprimer une enchère par son id
    */
   public function deleteAuction() {
 
@@ -486,12 +365,40 @@ $auctions = $this->oRequetesSQL->getAuctionsByUser($user->user_id);
      if ($this->oRequetesSQL->deleteAuction($this->auction_id)) {
       $this->messageRetourAction = "Suppression du lot $this->auction_id effectuée.";
     } else {
-      $this->classRetour = "erreur";
+  
       $this->messageRetourAction = "Suppression du lot $this->auction_id non effectuée.";
     }
     $this->listAuctionsByUser();
     }
 
+
+    
+  }
+
+
+
+   /**
+   * Affiche une enchère avec ses détails
+   */
+  public function singleDetails() {
+    $user=[];
+    if (isset($_SESSION['oUser'])) {
+      $user = $this->oUser = $_SESSION['oUser'];
+    }
+      $auction = $this->oRequetesSQL->getAuction($this->auction_id);
+      $bids = $this->oRequetesSQL->getBids($this->auction_id);
+
+    
+ 
+    (new Vue)->generer('vDetail',
+            array(
+              'user'                => $user,
+              'auction'             => $auction[0],
+              'bids'                => $bids,
+
+              'messageRetourAction' => $this->messageRetourAction
+            ),
+            'gabarit-frontend');
 
     
   }

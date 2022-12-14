@@ -16,7 +16,7 @@
           <div class="content">
 
             <div class="img-name">
-              <a href="#">
+              <a href="auctions?entite=auction&action=sd&auction_id={{ auction.auction_id }}">
                 
                 <img src="{{auction.image_link}}" alt="">
                 <h4>{{ auction.auction_name}}</h4>
@@ -29,9 +29,9 @@
                 
               </div>
               <div>
-                <a href="auctions?entite=auction&action=u&auction_id={{ auction.auction_id }}" class=" button">Modifier</a>
+                <a href="auctions?entite=auction&action=u&auction_id={{ auction.auction_id }}" class=" {% if auction.bid_id == null %} button{% else %} button-inactif {% endif %}">Modifier</a>
                 <br>
-                <a data-href="auctions?entite=auction&action=d&auction_id={{ auction.auction_id }}" class=" button confirmer">Supprimer</a>
+                <a data-href="auctions?entite=auction&action=d&auction_id={{ auction.auction_id }}" class=" {% if auction.bid_id == null %} button{% else %} button-inactif {% endif %} confirmer">Supprimer</a>
               </div>
             </div>
           </div>

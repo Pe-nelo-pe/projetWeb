@@ -3,9 +3,13 @@
 <h2>Mise rapide</h2>
 {{auction.auction_name}}
   <p>Confirmez la mise rapide sur l'enchère </p>
+  <form method="post"  action="bids?entite=bid&action=b&auction_id={{ auction.auction_id }}">
+ 
   <input type="number">$
-  <div class="actions">
-    <button class="OK focus">Miser</button>
-    <button class="KO ">Annuler</button>
-  </div>
+
+  <input type="submit" class="OK focus" value="Miser"> 
+
+  </form>
+  
+  <button class="KO ">Annuler</button>
 </dialog>

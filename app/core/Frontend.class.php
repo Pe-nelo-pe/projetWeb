@@ -15,21 +15,25 @@ class Frontend extends Routeur {
    * 
    */
   public function __construct() {
-    //$this->film_id = $_GET['film_id'] ?? null; 
     $this->oRequetesSQL = new RequetesSQL;
   }
 
 
     /**
-   * Lister les films à l'affiche
+   * Affichage accueil
    * 
    */  
   public function viewHome() {
-    //$films = $this->oRequetesSQL->getFilms('enSalle');
+    $user=[];
+    if (isset($_SESSION['oUser'])) {
+      $user = $this->oUser = $_SESSION['oUser'];
+    }
+    
     $auctions = $this->oRequetesSQL->getAuctionsHome();
     (new Vue)->generer("accueil",
             array(
               'auctions'  => $auctions,
+              'user'  => $user,
             ),
             "gabarit-frontend");
   }
