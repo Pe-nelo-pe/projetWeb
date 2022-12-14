@@ -90,16 +90,13 @@ class Stamp
 
      unset($this->erreurs['stamp_name']);
 
-   // $stamp_name = trim($stamp_name);
-//$regExp = '/^[a-zÀ-ÖØ-öø-ÿ]{2,}( [a-zÀ-ÖØ-öø-ÿ]{2,})*$/i';
+    $stamp_name = trim($stamp_name);
+
 
     if (!$stamp_name) {
       $this->erreurs['stamp_name'] = "Champs obligatoire.";
     }
-    // else if (!preg_match($regExp, $stamp_name)) {
-    //   $this->erreurs['stamp_name'] = "Au moins 2 caractères alphabétiques pour chaque mot.";
-    // }
-    //$this->stamp_name = ucwords(strtolower($stamp_name));
+
     $this->stamp_name = $stamp_name; 
     return $this;
  

@@ -29,14 +29,26 @@ class RequetesSQL extends RequetesPDO {
     return $this->CUDLigne($champs); 
   }
   
+   /**
+   * Modifier un utilisateur
+   * @param array $champs tableau avec les champs à modifier et la clé user_id
+   * @return boolean true si modification effectuée, false sinon
+   */ 
+  public function getUser($user_id) {
+    $this->sql = 'SELECT user_lastName, user_firstName, user_email, user_address, user_city, user_zipCode from users
+    WHERE user_id = :user_id';
+    return $this->getLignes(['user_id' => $user_id], RequetesPDO::UNE_SEULE_LIGNE);
+  }
+
   /**
    * Modifier un utilisateur
    * @param array $champs tableau avec les champs à modifier et la clé user_id
    * @return boolean true si modification effectuée, false sinon
    */ 
   public function updateUser($champs) {
-    $this->sql = 'UPDATE users SET user_lastName = :user_lastName, user_firstName = :user_firstName, user_email =:user_email, user_password = SHA2(:user_password, 512), user_address = :user_address, user_city = :user_city, user_zipCode = :user_zipCode, user_status_id = 1
-      WHERE user_id = :user_id';
+
+    $this->sql = 'UPDATE users SET user_lastName = :user_lastName, user_firstName = :user_firstName, user_email =:user_email, user_address = :user_address, user_city = :user_city, user_zipCode = :user_zipCode
+    WHERE user_id = :user_id';
     return $this->CUDLigne($champs);
   }
 
@@ -76,7 +88,7 @@ class RequetesSQL extends RequetesPDO {
 
   
   public function addStamp($champs) {
-   
+  
     $this->sql = ' INSERT INTO stamps SET stamp_name = :stamp_name, stamp_description = :stamp_description, stamp_price = :stamp_price, stamp_date = :stamp_date, stamp_certified =:stamp_certified, stamp_format = :stamp_format, stamp_color = :stamp_color, stamp_location_id = :stamp_location_id, stamp_condition_id = :stamp_condition_id, stamp_rareness_id = :stamp_rareness_id, stamp_auction_id = :stamp_auction_id, stamp_user_id = :stamp_user_id ';
     return $this->CUDLigne($champs); 
   }
@@ -86,7 +98,6 @@ class RequetesSQL extends RequetesPDO {
  
     $this->sql = ' UPDATE stamps SET stamp_name = :stamp_name, stamp_description = :stamp_description, stamp_price = :stamp_price, stamp_date = :stamp_date, stamp_certified =:stamp_certified, stamp_format = :stamp_format, stamp_color = :stamp_color, stamp_location_id = :stamp_location_id, stamp_condition_id = :stamp_condition_id, stamp_rareness_id = :stamp_rareness_id, stamp_auction_id = :stamp_auction_id, stamp_user_id = :stamp_user_id 
     where stamp_id = :stamp_id';
-  
     return $this->getLignes($champs); 
   }
 
@@ -179,10 +190,10 @@ class RequetesSQL extends RequetesPDO {
     return $this->getLignes(['auction_id' => $auction_id], RequetesPDO::UNE_SEULE_LIGNE);
   }
 
-  public function getMinAuction($auction_id){
-    $this->sql = 'SELECT auction_price from auctions where bid_auction_id = :auction_id';
-    return $this->getLignes(['auction_id' => $auction_id]);
-  }
+  // public function getMinAuction($auction_id){
+  //   $this->sql = 'SELECT auction_price from auctions where bid_auction_id = :auction_id';
+  //   return $this->getLignes(['auction_id' => $auction_id]);
+  // }
 // $this->sql =
 //       "SELECT MAX(mise_valeur), mise_utilisateur_id, mise_enchere_id
 //     FROM mise

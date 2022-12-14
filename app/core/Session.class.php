@@ -14,12 +14,12 @@ class Session extends Routeur {
 
   private $methodes = [
      'user' => [
-      'a' => ['nom'=>'addUser'],
-      'as' => ['nom'=>'afterSign'],
-      'c' => ['nom'=>'vAccount'],
-    // 'm' => ['nom'=>'modifierUser'],
-       's' => ['nom'=>'connecter'],
-       'd' => ['nom'=>'deconnecter'],
+        'a' => ['nom'=>'addUser'],
+        'as'=> ['nom'=>'afterSign'],
+        'c' => ['nom'=>'vAccount'],
+        'u' => ['nom'=>'updateUser'],
+        's' => ['nom'=>'connecter'],
+        'd' => ['nom'=>'deconnecter'],
      ]
   ];
     
@@ -99,10 +99,6 @@ class Session extends Routeur {
   }
 
 
-
-
-
-
     /**
    * Lister les users
    */
@@ -126,8 +122,6 @@ class Session extends Routeur {
   public function vAccount() {
     if (isset($_SESSION['oUser'])) {
      $user = $this->oUser = $_SESSION['oUser'];
-    }
-
 
     (new Vue)->generer('vAccount',
           array(
@@ -136,8 +130,8 @@ class Session extends Routeur {
             'messageRetourAction' => $this->messageRetourAction
           ),
           'gabarit-frontend');
+    }
   }
-
 
   /**
    * Ajouter un user
@@ -181,45 +175,56 @@ class Session extends Routeur {
             'gabarit-frontend');
   }
 
-  // /**
-  //  * Modifier un user identifié par sa clé dans la propriété user_id
-  //  */
-  // public function modifierUser() {
-  //   if (count($_POST) !== 0) {
-  //     $user = $_POST;
-  //     $oUser = new User($user);
-  //     $erreurs = $oUser->erreurs;
-  //     if (count($erreurs) === 0) {
-  //       if($this->oRequetesSQL->modifierUser([
-  //         'user_id'     => $oUser->user_id,
-  //         'user_nom'    => $oUser->user_nom,
-  //         'user_prenom' => $oUser->user_prenom,
-  //         'user_courriel' => $oUser->user_courriel,
-  //         'user_profil' => $oUser->user_profil
-  //       ])) {
-  //         $this->messageRetourAction = "Modification de l'user numéro $this->user_id effectuée.";
-  //       } else {
-  //         $this->classRetour = "erreur";
-  //         $this->messageRetourAction = "modification de l'user numéro $this->user_id non effectuée.";
-  //       }
-  //       $this->listerUsers();
-  //       exit;
-  //     }
+  /**
+   * Modifier un user identifié par sa clé dans la propriété user_id
+   */
+  public function updateUser() {
+    if (isset($_SESSION['oUser'])) {
+     $users = $this->oUser = $_SESSION['oUser'];
+    }
+    if (count($_POST) !== 0) {
+      //echo "id " .$users->user_id;
+      $user = $_POST;
+      $oUser = new User($user);
+      $erreurs = $oUser->erreurs;
+      //print_r($oUser);
+      if (count($erreurs) === 0) {
+        
+        if($this->oRequetesSQL->updateUser([
+          'user_id'        => $users->user_id,
+          'user_lastName'  => $oUser->user_lastName,
+          'user_firstName' => $oUser->user_firstName,
+          'user_email'     => $oUser->user_email,
+          'user_address'   => $oUser->user_address,
+          'user_city'      => $oUser->user_city,
+          'user_zipCode'   => $oUser->user_zipCode,
+        ])) { 
+          $this->messageRetourAction = "Modification effectuée.";
+          echo $oUser->user_firstName;
+          $_SESSION['oUser']['user_firstName'] = $oUser->user_firstName;
+        } else {
 
-  //   } else {
-  //     $user  = $this->oRequetesSQL->getUser($this->user_id);
-  //     $erreurs = [];
-  //   }
+          $this->messageRetourAction = "Modification non effectuée.";
+        }
+        //$this->vAccount();
+        //exit;
+      }
+
+    } else {
+      $user  = $this->oRequetesSQL->getUser($this->user_id);
+      $erreurs = [];
+    }
     
-  //   (new Vue)->generer('vAdminUserModifier',
-  //           array(
-  //             'oUser' => $this->oUser,
-  //             'titre'        => "Modifier l'user numéro $this->user_id",
-  //             'user'  => $user,
-  //             'erreurs'      => $erreurs
-  //           ),
-  //           'gabarit-admin');
-  // }
+    (new Vue)->generer('vUpdateUser',
+            array(
+              // 'oUser'   => $this->oUser,
+              'titre'   => "Modification du compte",
+              'user'    => $users,
+              'erreurs' => $erreurs,
+              'messageRetourAction' => $this->messageRetourAction
+            ),
+            'gabarit-frontend');
+  }
   
   
 }

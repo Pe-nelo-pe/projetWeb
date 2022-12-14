@@ -81,11 +81,11 @@ class User
   public function setUser_lastName($user_lastName) {
     unset($this->erreurs['user_lastName']);
     $user_lastName = trim($user_lastName);
-    $regExp = '/^[a-zÀ-ÖØ-öø-ÿ]{2,}( [a-zÀ-ÖØ-öø-ÿ]{2,})*$/i';
-    if (!preg_match($regExp, $user_lastName)) {
-      $this->erreurs['user_lastName'] = "Au moins 2 caractères alphabétiques pour chaque mot.";
+    
+    if (!$user_lastName ) {
+      $this->erreurs['user_lastName'] = "Champs obligatoire.";
     }
-    $this->user_lastName = ucwords(strtolower($user_lastName));
+
     $this->user_lastName = $user_lastName; 
     return $this;
 
@@ -99,11 +99,10 @@ class User
   public function setUser_firstName($user_firstName) {
     unset($this->erreurs['user_firstName']);
     $user_firstName = trim($user_firstName);
-    $regExp = '/^[a-zÀ-ÖØ-öø-ÿ]{2,}( [a-zÀ-ÖØ-öø-ÿ]{2,})*$/i';
-    if (!preg_match($regExp, $user_firstName)) {
-      $this->erreurs['user_firstName'] = "Au moins 2 caractères alphabétiques pour chaque mot.";
+   
+    if (!$user_firstName) {
+      $this->erreurs['user_firstName'] = "Champs obligatoire.";
     }
-    $this->user_firstName = ucwords(strtolower($user_firstName));
     $this->user_firstName = $user_firstName; 
     return $this;
   }
