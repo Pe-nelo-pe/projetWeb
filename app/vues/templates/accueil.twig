@@ -1,4 +1,6 @@
-
+<script>
+	history.pushState({}, '', 'accueil')
+</script>
     <section class="hero-ban">
       <img src="assets/imgs/pexels-tolga-deniz-aran-11942438.webp" alt="Multiple timbres">
       <div>
@@ -51,10 +53,10 @@
             </div>
             <div class="info-btn">
               <div class="info">
-                <span>3j 2h 34m </span>
+                <span>{{auction.auction_finishDate}} </span>
                 <div>
                   <span>{% if auction.bid_amount == null%} Aucune mise {% else %}{{ auction.bid_amount }}$ {% endif %}</span>
-                  <small>(3 mises)</small>
+                  
                 </div>
               </div>
               <div>

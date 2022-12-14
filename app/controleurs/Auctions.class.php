@@ -98,8 +98,6 @@ class Auctions extends Routeur {
    
     $auctions = $this->oRequetesSQL->getAuctions();
 
-   
-
     (new Vue)->generer('vCatalogue',
             array(
               'user'       => $user,
@@ -123,7 +121,6 @@ class Auctions extends Routeur {
     $rareness = $this->oRequetesSQL->getRareness();
     $condition = $this->oRequetesSQL->getConditions();
     
-    
     $auction  = [];
     $stamp = [];
     $erreursA = [];
@@ -136,27 +133,21 @@ class Auctions extends Routeur {
 
     if (count($_POST) !== 0) {
 
-      
-      //die;
-      $stamp = array_splice($_POST, 7);
-      $auction = $_POST;
-      
+      $postDivised = $this->splitArrayByKey($_POST,"auction_status_id",true);
     
-// !!!!!!changer pour nom de champs
+      $auction = $postDivised[0];
+      $stamp = $postDivised[1];
+      
       $oAuction = new Auction($auction); 
       $erreursA = $oAuction->erreurs; 
-
-     
 
       $oStamp = new Stamp($stamp); 
       $erreursS = $oStamp->erreurs;
 
-
-
       if($_FILES['userfile']['error'] === 4){
-          $erreursI = 'Champs obligatoire';
+        $erreursI = 'Champs obligatoire';
 
-        }
+      }
 
       if (count($erreursA) === 0 && count($erreursS) === 0 && $_FILES['userfile']['error'] != 4) { 
         
@@ -170,7 +161,7 @@ class Auctions extends Routeur {
           'auction_status_id'   => $oAuction->auction_status_id
         ]);
 
-         $stamp_id = $this->oRequetesSQL->addStamp([
+        $stamp_id = $this->oRequetesSQL->addStamp([
           'stamp_name' => $oStamp->stamp_name, 
           'stamp_description'  => $oStamp->stamp_description,  
           'stamp_price'        => $oStamp->stamp_price, 
@@ -197,8 +188,8 @@ class Auctions extends Routeur {
             'image_name'    => $nom_fichier,
             'image_stamp_id'=> $stamp_id
           ]);
-
         }
+
         $nom_fichier = $_FILES['userfile2']['name'];
         $fichier = $_FILES['userfile2']['tmp_name'];
 
@@ -210,8 +201,8 @@ class Auctions extends Routeur {
             'image_name'    => $nom_fichier,
             'image_stamp_id'=> $stamp_id
           ]);
-
         } 
+
         $nom_fichier = $_FILES['userfile3']['name'];
         $fichier = $_FILES['userfile3']['tmp_name'];
 
@@ -238,9 +229,9 @@ class Auctions extends Routeur {
           ]);
         }
 
-            $this->messageRetourAction = "Enchère ajoutée.";
-            $this->listAuctionsByUser(); 
-            exit;
+          $this->messageRetourAction = "Enchère ajoutée.";
+          $this->listAuctionsByUser(); 
+          exit;
         }
       }
  
@@ -276,28 +267,22 @@ class Auctions extends Routeur {
     $rareness = $this->oRequetesSQL->getRareness();
     $condition = $this->oRequetesSQL->getConditions();
     
-    
- 
     $stamp = [];
     $erreursA = [];
     $erreursS = [];
 
-  
-
     if (count($_POST) !== 0) {
-      $stamp = array_splice($_POST, 7);
-      $auction = $_POST;
+  
+      $postDivised = $this->splitArrayByKey($_POST,"auction_status_id",true);
+    
+      $auction = $postDivised[0];
+      $stamp = $postDivised[1];
         
-// !!!!!!changer pour nom de champs
       $oAuction = new Auction($auction); 
       $erreursA = $oAuction->erreurs; 
 
-     
-
       $oStamp = new Stamp($stamp); 
       $erreursS = $oStamp->erreurs;
-
-     
 
       if (count($erreursA) === 0 && count($erreursS) === 0) { 
         
@@ -328,10 +313,10 @@ class Auctions extends Routeur {
           'stamp_user_id'     => $user->user_id,
         ]);
 
-          $this->messageRetourAction = "Modifications faites.";
-          $this->listAuctionsByUser(); 
-          exit; 
-        }
+        $this->messageRetourAction = "Modifications faites.";
+        $this->listAuctionsByUser(); 
+        exit; 
+      }
 
     }else {
       $auctions  = $this->oRequetesSQL->getAuction($this->auction_id);
@@ -362,19 +347,14 @@ class Auctions extends Routeur {
     if (isset($_SESSION['oUser'])) {
      $this->oUser = $_SESSION['oUser'];
 
-     if ($this->oRequetesSQL->deleteAuction($this->auction_id)) {
-      $this->messageRetourAction = "Suppression du lot $this->auction_id effectuée.";
-    } else {
-  
+      if ($this->oRequetesSQL->deleteAuction($this->auction_id)) {
+        $this->messageRetourAction = "Suppression du lot $this->auction_id effectuée.";
+      } else {
       $this->messageRetourAction = "Suppression du lot $this->auction_id non effectuée.";
+      }
+      $this->listAuctionsByUser();
     }
-    $this->listAuctionsByUser();
-    }
-
-
-    
   }
-
 
 
    /**
@@ -385,24 +365,53 @@ class Auctions extends Routeur {
     if (isset($_SESSION['oUser'])) {
       $user = $this->oUser = $_SESSION['oUser'];
     }
-      $auction = $this->oRequetesSQL->getAuction($this->auction_id);
-      $bids = $this->oRequetesSQL->getBids($this->auction_id);
-
-    
+    $auction = $this->oRequetesSQL->getAuction($this->auction_id);
+    $bids = $this->oRequetesSQL->getBids($this->auction_id);
  
     (new Vue)->generer('vDetail',
             array(
               'user'                => $user,
               'auction'             => $auction[0],
               'bids'                => $bids,
-
               'messageRetourAction' => $this->messageRetourAction
             ),
             'gabarit-frontend');
-
-    
   }
 
-  
 
+  /*
+DESCRIPTION: This function splits an array into chunks based on a key value.
+ 
+ARGUMENTS
+@Param  $array  array  The Input array  REQUIRED.
+@Param  $needle mixed  The key value to split $array on.
+@Param  $preserve_keys Boolean  If true, the function preserves the keys after the split
+ 
+RETURNS
+    A multi-dimensional array containing the chunks after splitting $array.
+    Null if either key value doesn't exist or the chunk length is greater $array length.
+*/
+function splitArrayByKey($array,$needle,$preserve_keys = false)
+{
+    //Get the array of keys.
+    $array_keys = array_keys($array);
+    
+    //Search the $needle in the array of keys.
+    $split_index = array_search($needle, $array_keys);
+ 
+    //If the keys exists
+    if($split_index !== false) 
+    {
+        //Make array chunks with each chunk containing less than or equal to ($split_index+1) elements.
+        $partitioned_array = array_chunk($array,$split_index+1,$preserve_keys);
+ 
+        return $partitioned_array;
+    }
+ 
+    //If the key doesn't exist.
+    else
+    {
+        return null;
+    }
+}
 }

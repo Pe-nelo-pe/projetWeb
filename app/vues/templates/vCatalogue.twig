@@ -72,10 +72,10 @@
             </div>
             <div class="info-btn">
               <div class="info">
-                <span>3j 2h 34m </span>
+                <span>{{auction.auction_finishDate}} </span>
                 <div>
                   <span>{% if auction.bid_amount == null %} Aucune mise {% else %}{{ auction.bid_amount }}$ {% endif %}</span>
-                  <small>({{ numBids }} mises)</small>
+                  
                 </div>
               </div>
               <div>

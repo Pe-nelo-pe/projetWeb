@@ -178,6 +178,11 @@ class RequetesSQL extends RequetesPDO {
     $this->sql = 'SELECT max(bid_amount) as maxAmount from bids where bid_auction_id = :auction_id';
     return $this->getLignes(['auction_id' => $auction_id], RequetesPDO::UNE_SEULE_LIGNE);
   }
+
+  public function getMinAuction($auction_id){
+    $this->sql = 'SELECT auction_price from auctions where bid_auction_id = :auction_id';
+    return $this->getLignes(['auction_id' => $auction_id]);
+  }
 // $this->sql =
 //       "SELECT MAX(mise_valeur), mise_utilisateur_id, mise_enchere_id
 //     FROM mise

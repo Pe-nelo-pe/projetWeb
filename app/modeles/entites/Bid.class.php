@@ -95,6 +95,7 @@ class Bid
    
     $oRequetesSQL = new RequetesSQL;
     $maxValue = $oRequetesSQL->getMaxBid($id);
+    $minValue = $oRequetesSQL->getMinAuction($id);
 
     $maxValue = $maxValue["maxAmount"];
 
