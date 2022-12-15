@@ -190,10 +190,12 @@ class RequetesSQL extends RequetesPDO {
     return $this->getLignes(['auction_id' => $auction_id], RequetesPDO::UNE_SEULE_LIGNE);
   }
 
-  // public function getMinAuction($auction_id){
-  //   $this->sql = 'SELECT auction_price from auctions where bid_auction_id = :auction_id';
-  //   return $this->getLignes(['auction_id' => $auction_id]);
-  // }
+  public function getMinAuction($auction_id){
+    
+    $this->sql = 'SELECT auction_price as minAmount from auctions where auction_id = :auction_id';
+    return $this->getLignes(['auction_id' => $auction_id], RequetesPDO::UNE_SEULE_LIGNE);
+  }
+
 // $this->sql =
 //       "SELECT MAX(mise_valeur), mise_utilisateur_id, mise_enchere_id
 //     FROM mise

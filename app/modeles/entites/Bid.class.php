@@ -95,12 +95,16 @@ class Bid
    
     $oRequetesSQL = new RequetesSQL;
     $maxValue = $oRequetesSQL->getMaxBid($id);
-    //$minValue = $oRequetesSQL->getMinAuction($id);
+    $minValue = $oRequetesSQL->getMinAuction($id);
 
     $maxValue = $maxValue["maxAmount"];
+    $minValue = $minValue["minAmount"];
 
     if($bid_amount <= $maxValue){
       $this->erreurs['bid_amount'] = "La nouvelle mise doit être plus haute que la dernière mise faite";
+    }
+    if($bid_amount < $minValue){
+      $this->erreurs['bid_amount'] = "La nouvelle mise doit être plus haute que la mise minimale";
 
     }
     $this->bid_amount = $bid_amount; 

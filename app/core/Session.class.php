@@ -201,6 +201,7 @@ class Session extends Routeur {
         ])) { 
           $this->messageRetourAction = "Modification effectuée.";
           echo $oUser->user_firstName;
+          print_r($user);
           $_SESSION['oUser']['user_firstName'] = $oUser->user_firstName;
         } else {
 

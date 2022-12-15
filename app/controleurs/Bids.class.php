@@ -81,6 +81,8 @@ public function gererBid() {
           $this->messageRetourAction = "Mise sur le lot ".$this->auction_id. " effectuée";
           // $auction = new Auctions();
           // $auction->singleDetails();
+        } else {
+          $this->messageRetourAction = "Erreur lors de la mise. Mise NON effectuée";
         }
    
         
