@@ -1,0 +1,22 @@
+ <script>
+ 	history.pushState({}, '', 'session?entite=user&action=c')
+ </script>
+<section class="connexion">
+  <h1>{{ titre|upper }}</h1>
+  <p class="mess">{{ messageRetourAction}}&nbsp;</p>   
+  <span> Prénom: {{ user.user_firstName}}</span>
+
+  <span> Nom: {{ user.user_lastName}}</span>
+
+  <span> Courriel: {{ user.user_email }}</span>
+
+  <hr>
+
+  <div>
+    <a class="button" href="session?entite=user&action=u&user_id={{user.user_id}}">Modifier </a>
+    <a class="button" href="auctions?entite=auction&action=a">Créer une enchère</a>
+    <a class="button" href="auctions?entite=auction&action=l">Voir mes enchères</a>
+    <a class="button-inactif" href="">Voir mes mises</a>
+  </div>
+
+</section>

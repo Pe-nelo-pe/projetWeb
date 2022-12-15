@@ -92,7 +92,7 @@
   font-size: var(--font-size-regular-plus);
 }
 
-.card .button{
+.card .button, .card .button-inactif{
   display: block;
   margin: 25px auto;
 }

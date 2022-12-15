@@ -1,0 +1,23 @@
+.connexion{
+  margin-bottom: 50px;
+}
+
+.connexion span {
+  display: block;
+  padding: 15px 0;
+  font-size: var(--font-size-regular-plus);
+}
+
+
+
+.connexion div{
+  margin-top: 25px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.connexion div a{
+  margin-bottom: 25px;
+
+}

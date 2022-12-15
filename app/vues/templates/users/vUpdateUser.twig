@@ -1,8 +1,10 @@
+<a href="session?entite=user&action=c"> Retour au compte </a>
+
 <section>
   <h1>{{ titre|upper }}</h1>
-  <p class="messageRetourAction {{ classRetour }}">{{ messageRetourAction|raw}}&nbsp;</p>   
+  <p class="mess">{{ messageRetourAction}}&nbsp;</p>   
   
-  <form method="POST" action="session?entite=user&action=a">
+  <form method="POST" action="session?entite=user&action=u" class="form">
 
     <label>Prénom</label>
     <input type="text" name="user_firstName" value="{{ user.user_firstName }}">
@@ -16,10 +18,7 @@
     <input type="email" name="user_email" value="{{ user.user_email }}">
     <span class="error">&nbsp;{{ erreurs.user_email }}</span>
 <br>
-    <label>Mot de passe</label>
-    <input type="password" name="user_password" value="{{ user.user_password }}">
-    <span class="error">&nbsp;{{ erreurs.user_password }}</span>
-<br>
+
     <label>Adresse</label>
     <input type="text" name="user_address" value="{{ user.user_address }}">
     <span class="error">&nbsp;{{ erreurs.user_address}}</span>

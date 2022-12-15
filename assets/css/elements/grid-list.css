@@ -91,7 +91,7 @@
   gap: 15px;
 }
 
-.list .button{
+.list .button, .list .button-inactif{
   margin: 0;
 }
 

@@ -163,12 +163,11 @@ class RequetesSQL extends RequetesPDO {
       left join conditions on stamp_condition_id = condition_id
       left join rareness on stamp_rareness_id = rareness_id
       left join images on image_stamp_id = stamp_id
-      left join bids on auction_id = bid_auction_id AND bid_amount = (select max(bid_amount) from bids where auction_id = bid_auction_id)
+      left join bids on auction_id = bid_auction_id AND bid_amount = (select max(bid_amount) from bids where auction_id = bid_auction_id)  
       WHERE auction_id = :auction_id
        ';
     return $this->getLignes(['auction_id' => $auction_id]);
   }
-
 
   public function addBid($champs){
     $this->sql = 'INSERT INTO bids 
@@ -191,16 +190,15 @@ class RequetesSQL extends RequetesPDO {
   }
 
   public function getMinAuction($auction_id){
-    
     $this->sql = 'SELECT auction_price as minAmount from auctions where auction_id = :auction_id';
     return $this->getLignes(['auction_id' => $auction_id], RequetesPDO::UNE_SEULE_LIGNE);
   }
 
-// $this->sql =
-//       "SELECT MAX(mise_valeur), mise_utilisateur_id, mise_enchere_id
-//     FROM mise
-//     where :enchere_id = mise_enchere_id
-//    group by mise_enchere_id 
+
+  public function getLastBidUser($bid_user_id){
+    $this->sql = 'SELECT user_firstName from users WHERE user_id = :bid_user_id';
+    return $this->getLignes(['bid_user_id' => $bid_user_id], RequetesPDO::UNE_SEULE_LIGNE);
+  }
 
   public function getCountBid($auction_id){
     $this->sql = 'SELECT COUNT(*) from bids

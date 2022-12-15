@@ -113,3 +113,7 @@ main>div{
 .error{
     color: red;
 }
+
+.mess{
+    font-size: var(--font-size-medium);
+}

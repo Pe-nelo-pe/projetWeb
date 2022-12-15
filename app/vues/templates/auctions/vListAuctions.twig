@@ -6,7 +6,7 @@
 <a href="session?entite=user&action=c"> Retour au compte </a>
   <h1>{{ titre|upper }}</h1>
 
- <p class="messageRetourAction {{ classRetour }}">{{ messageRetourAction}}&nbsp;</p>   
+ <p class="mess">{{ messageRetourAction}}&nbsp;</p>   
       <div class=" list">
   {% for auction in auctions %}
     
@@ -48,4 +48,4 @@
   {% endfor %}
   </div>
 </section> 
-{{ include("modaleSuppression.twig") }}
+{{ include("modales/modaleSuppression.twig") }}

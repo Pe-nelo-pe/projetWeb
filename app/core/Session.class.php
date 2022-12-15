@@ -81,12 +81,12 @@ class Session extends Routeur {
 
     }
     
-    (new Vue)->generer('vConnexion',
+    (new Vue)->generer('users/vConnexion',
             array(
               'titre'                  => 'Connexion',
               'messageErreurConnexion' => $messageErreurConnexion
             ),
-            'gabarit-frontend');
+            'gabarits/gabarit-frontend');
   }
 
 
@@ -111,12 +111,12 @@ class Session extends Routeur {
     }
 
 
-    (new Vue)->generer('vNewUser',
+    (new Vue)->generer('users/vNewUser',
             array(
               'oUser'               => $this->oUser,
               'messageRetourAction' => $this->messageRetourAction
             ),
-            'gabarit-frontend');
+            'gabarits/gabarit-frontend');
   }
 
 
@@ -127,13 +127,13 @@ class Session extends Routeur {
     if (isset($_SESSION['oUser'])) {
      $user = $this->oUser = $_SESSION['oUser'];
 
-    (new Vue)->generer('vAccount',
+    (new Vue)->generer('users/vAccount',
           array(
             'titre'               => 'Votre compte',
             'user'                => $user,
             'messageRetourAction' => $this->messageRetourAction
           ),
-          'gabarit-frontend');
+          'gabarits/gabarit-frontend');
     }
   }
 
@@ -166,14 +166,14 @@ class Session extends Routeur {
       }
     }
     
-    (new Vue)->generer('vSignUp',
+    (new Vue)->generer('users/vSignUp',
             array(
               'oUser'        => $this->oUser, 
               'titre'        => 'Inscription',
               'user'         => $user,
               'erreurs'      => $erreurs
             ),
-            'gabarit-frontend');
+            'gabarits/gabarit-frontend');
   }
 
   /**
@@ -201,15 +201,15 @@ class Session extends Routeur {
           'user_zipCode'   => $oUser->user_zipCode,
         ])) { 
           $this->messageRetourAction = "Modification effectuée.";
-         (new Vue)->generer('vAccount',
+
+         (new Vue)->generer('users/vAccount',
             array(
-              // 'oUser'   => $this->oUser,
-              'titre'   => "Modification du compte",
+              'titre'   => "Votre compte",
               'user'    => $users,
               'erreurs' => $erreurs,
               'messageRetourAction' => $this->messageRetourAction
             ),
-            'gabarit-frontend');  
+            'gabarits/gabarit-frontend');  
         } else {
 
           $this->messageRetourAction = "Modification non effectuée.";
@@ -222,15 +222,14 @@ class Session extends Routeur {
       $erreurs = [];
     }
     
-    (new Vue)->generer('vUpdateUser',
+    (new Vue)->generer('users/vUpdateUser',
             array(
-              // 'oUser'   => $this->oUser,
               'titre'   => "Modification du compte",
               'user'    => $users,
               'erreurs' => $erreurs,
               'messageRetourAction' => $this->messageRetourAction
             ),
-            'gabarit-frontend');
+            'gabarits/gabarit-frontend');
   }
   
   

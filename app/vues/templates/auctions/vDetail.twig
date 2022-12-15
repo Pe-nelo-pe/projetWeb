@@ -25,7 +25,7 @@
 
     </div>
 
-<p>{{ messageRetourAction}}&nbsp;</p>
+<p class="mess">{{ messageRetourAction}}&nbsp;</p>
 
     <section class="details">
       <div class="header">
@@ -62,7 +62,9 @@
             {% if auction.bid_amount == null%}
             <div><p>Mise minimale :</p> <p>{{auction.auction_price}}$</p></div>
             {% endif %}
-            <div><p>Par :</p><p>{{auction.user_firstName}} </p></div>
+            {% if auction.bid_amount != null%}
+            <div><p>Par :</p><p>{{userBid.user_firstName}} </p></div>
+            {% endif %}
             <div><p>Termine le  :</p><p>{{auction.auction_finishDate | date("d/m/Y")}}</p></div>
             
               <form method="POST" action="bids?entite=bid&action=b&auction_id={{ auction.auction_id }}">
@@ -175,7 +177,7 @@
                 </div>
               </div>
               <div>
-                <button class="button bid">Mise rapide</button>
+                 <button class=" bid {% if session.oUser is defined %}button {% else %} button-inactif {% endif %}" data-href="bids?entite=bid&action=b&auction_id={{ auction.auction_id }}">Mise rapide</button>
               </div>
             </div>
           </div>
@@ -207,7 +209,7 @@
                 </div>
               </div>
               <div>
-                <button class="button bid">Mise rapide</button>
+                 <button class=" bid {% if session.oUser is defined %}button {% else %} button-inactif {% endif %}" data-href="bids?entite=bid&action=b&auction_id={{ auction.auction_id }}">Mise rapide</button>
               </div>
             </div>
           </div>
@@ -239,7 +241,7 @@
                 </div>
               </div>
               <div>
-                <button class="button bet">Mise rapide</button>
+                 <button class=" bid {% if session.oUser is defined %}button {% else %} button-inactif {% endif %}" data-href="bids?entite=bid&action=b&auction_id={{ auction.auction_id }}">Mise rapide</button>
               </div>
             </div>
           </div>

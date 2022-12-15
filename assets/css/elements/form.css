@@ -1,0 +1,7 @@
+.form > *{
+  margin: 15px 0;
+}
+
+.form label{
+  margin-right: 25px;
+}

@@ -90,17 +90,21 @@ class Bids extends Routeur {
         
       }
     }
+    if($bids){
+
+      $userBid = $this-> oRequetesSQL->getLastBidUser($bids[0]['bid_user_id']);
+    }
     
-    (new Vue)->generer('vDetail',
+    (new Vue)->generer('auctions/vDetail',
             array(
               'user'                => $user,
-              'bid'                 => $bid,
+              'userBid'             => $userBid,
               'erreurs'             => $erreurs,
               'auction'             => $auction[0],
               'bids'                => $bids,
               'messageRetourAction' => $this->messageRetourAction
             ),
-            'gabarit-frontend');
+            'gabarits/gabarit-frontend');
     
   }
 }

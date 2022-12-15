@@ -78,14 +78,14 @@ class Auctions extends Routeur {
 
     $auctions = $this->oRequetesSQL->getAuctionsByUser($user->user_id);
 
-    (new Vue)->generer('vListAuctions',
+    (new Vue)->generer('auctions/vListAuctions',
             array(
               'user'                => $user,
               'titre'               => 'Liste de vos enchères',
               'auctions'            => $auctions,
               'messageRetourAction' => $this->messageRetourAction
             ),
-            'gabarit-frontend');
+            'gabarits/gabarit-frontend');
   }
 
 
@@ -93,19 +93,20 @@ class Auctions extends Routeur {
    * Lister les enchères du catalogue
    */
   public function catalogueAuctions() {
+    $user=[];
     if (isset($_SESSION['oUser'])) {
       $user = $this->oUser = $_SESSION['oUser'];
     }
    
     $auctions = $this->oRequetesSQL->getAuctions();
 
-    (new Vue)->generer('vCatalogue',
+    (new Vue)->generer('auctions/vCatalogue',
             array(
               'user'       => $user,
               'auctions'   => $auctions,
               
             ),
-            'gabarit-frontend');
+            'gabarits/gabarit-frontend');
   }
 
 
@@ -235,7 +236,7 @@ class Auctions extends Routeur {
         }
       }
  
-    (new Vue)->generer('vAddAuction',
+    (new Vue)->generer('auctions/vAddAuction',
             array(
               'titre'       => 'Ajouter une enchère',
               'user'        => $user,
@@ -248,7 +249,7 @@ class Auctions extends Routeur {
               'erreursI'    => $erreursI,
               'erreursS'    => $erreursS
             ),
-            'gabarit-frontend');
+            'gabarits/gabarit-frontend');
   }
      
   
@@ -322,7 +323,7 @@ class Auctions extends Routeur {
       $auctions  = $this->oRequetesSQL->getAuction($this->auction_id);
     }
 
-    (new Vue)->generer('vUpdateAuction',
+    (new Vue)->generer('auctions/vUpdateAuction',
             array(
               'titre'       => 'Modifier une enchère',
               'user'        => $user,
@@ -334,7 +335,7 @@ class Auctions extends Routeur {
               'erreursA'    => $erreursA,
               'erreursS'    => $erreursS
             ),
-            'gabarit-frontend');
+            'gabarits/gabarit-frontend');
   }
   
 
@@ -362,23 +363,31 @@ class Auctions extends Routeur {
    */
   public function singleDetails() {
     $user=[];
+    $userBid=[];
     if (isset($_SESSION['oUser'])) {
       $user = $this->oUser = $_SESSION['oUser'];
     }
     $auction = $this->oRequetesSQL->getAuction($this->auction_id);
     $bids = $this->oRequetesSQL->getBids($this->auction_id);
- 
-    (new Vue)->generer('vDetail',
+    if($bids){
+
+      $userBid = $this-> oRequetesSQL->getLastBidUser($bids[0]['bid_user_id']);
+    }
+
+    (new Vue)->generer('auctions/vDetail',
             array(
               'user'                => $user,
               'auction'             => $auction[0],
               'bids'                => $bids,
+              'userBid'             => $userBid,
               'messageRetourAction' => $this->messageRetourAction
             ),
-            'gabarit-frontend');
+            'gabarits/gabarit-frontend');
   }
 
 
+
+  //-----Fonction prise sur https://fuelingphp.com/how-to-split-associative-array-in-php/-----
 
   /*
 DESCRIPTION: This function splits an array into chunks based on a key value.
