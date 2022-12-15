@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Classe Contrôleur des requêtes de l'application admin
+ * Classe Contrôleur des requêtes des mises
  */
 
 class Bids extends Routeur {
@@ -18,8 +18,6 @@ class Bids extends Routeur {
     ]
   ];
     
-
-  private $classRetour = "fait";
   private $messageRetourAction = "";
 
   /**
@@ -33,7 +31,12 @@ class Bids extends Routeur {
     $this->oRequetesSQL = new RequetesSQL;
  
   }
-public function gererBid() {
+
+
+  /**
+   * Gérer l'interface des mises
+   */ 
+  public function gererBid() {
     if (isset($_SESSION['oUser'])) {
       $this->oUser = $_SESSION['oUser'];
       if (isset($this->methodes[$this->entite])) {
@@ -47,13 +50,13 @@ public function gererBid() {
       } else {
         throw new Exception("L'entité $this->entite n'existe pas.");
       }
-    } else {
-     // $this->catalogueAuctions();
-    }
+    } 
   }
 
 
-
+  /**
+   * Faire une mise
+   */ 
   public function bid(){
     $bid=[];
     $erreurs = [];
@@ -69,8 +72,7 @@ public function gererBid() {
     
         $oBid = new Bid($bid); 
         $erreurs = $oBid->erreurs;
-        //print_r($oBid);
-        //die;
+    
         if (count($erreurs) === 0) { 
           $bid_id = $this->oRequetesSQL->addBid([
             'bid_user_id'     => $user->user_id,
@@ -79,8 +81,7 @@ public function gererBid() {
           
           ]);
           $this->messageRetourAction = "Mise sur le lot ".$this->auction_id. " effectuée";
-          // $auction = new Auctions();
-          // $auction->singleDetails();
+          
         } else {
           $this->messageRetourAction = "Erreur lors de la mise. Mise NON effectuée";
         }
@@ -102,9 +103,4 @@ public function gererBid() {
             'gabarit-frontend');
     
   }
-
-
-
-
-
 }

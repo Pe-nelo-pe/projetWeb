@@ -16,9 +16,6 @@ class User
   private $user_city;
   private $user_zipCode;
 
-  const PROFIL_ADMINISTRATEUR = "administrateur";
-  const PROFIL_USER = "user";
-
   private $erreurs = array();
 
   /**
@@ -88,7 +85,6 @@ class User
 
     $this->user_lastName = $user_lastName; 
     return $this;
-
   }
 
   /**
@@ -151,8 +147,6 @@ class User
    
     $this->user_password = $user_password; 
     return $this;
-
-  
   }
 
   

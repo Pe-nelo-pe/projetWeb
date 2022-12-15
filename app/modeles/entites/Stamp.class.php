@@ -20,8 +20,6 @@ class Stamp
   private $stamp_rareness_id;
   private $stamp_auction_id;
 
-
-
   private $erreurs = array();
 
   /**
@@ -46,20 +44,20 @@ class Stamp
   }
 
   // Getters explicites nécessaires au moteur de templates TWIG
-  public function getStamp_id()       { return $this->stamp_id; }
-  public function getStamp_name() { return $this->stamp_name; }
-  public function getStamp_description(){ return $this->stamp_description; }
-  public function getStamp_price()    { return $this->stamp_price; }
-  public function getStamp_date() { return $this->stamp_date; }
-  public function getStamp_certified(){ return $this->stamp_certified; }
-  public function getStamp_format()  { return $this->stamp_format; }
-  public function getStamp_color()     { return $this->stamp_color; }
+  public function getStamp_id()           { return $this->stamp_id; }
+  public function getStamp_name()         { return $this->stamp_name; }
+  public function getStamp_description()  { return $this->stamp_description; }
+  public function getStamp_price()        { return $this->stamp_price; }
+  public function getStamp_date()         { return $this->stamp_date; }
+  public function getStamp_certified()    { return $this->stamp_certified; }
+  public function getStamp_format()       { return $this->stamp_format; }
+  public function getStamp_color()        { return $this->stamp_color; }
   public function getStamp_location_id()  { return $this->stamp_location_id; }
-  public function getStamp_image_id()  { return $this->stamp_image_id; }
-  public function getStamp_condition_id()  { return $this->stamp_condition_id; }
+  public function getStamp_image_id()     { return $this->stamp_image_id; }
+  public function getStamp_condition_id() { return $this->stamp_condition_id; }
   public function getStamp_rareness_id()  { return $this->stamp_rareness_id; }
-  public function getStamp_auction_id()  { return $this->stamp_auction_id; }
-  public function getErreurs()       { return $this->erreurs; }
+  public function getStamp_auction_id()   { return $this->stamp_auction_id; }
+  public function getErreurs()            { return $this->erreurs; }
   
   /**
    * Mutateur magique qui exécute le mutateur de la propriété en paramètre 
@@ -72,12 +70,11 @@ class Stamp
   }
 
   /**
-   * Mutateur de la propriété user_id 
-   * @param int $user_id
+   * Mutateur de la propriété stamp_id 
+   * @param int $stamp_id
    * @return $this
    */    
   public function setStamp_id($stamp_id) {
-    
     $this->stamp_id = $stamp_id; 
   }    
 
@@ -87,11 +84,9 @@ class Stamp
    * @return $this
    */    
   public function setStamp_name($stamp_name) {
-
-     unset($this->erreurs['stamp_name']);
+    unset($this->erreurs['stamp_name']);
 
     $stamp_name = trim($stamp_name);
-
 
     if (!$stamp_name) {
       $this->erreurs['stamp_name'] = "Champs obligatoire.";
@@ -108,7 +103,6 @@ class Stamp
    * @return $this
    */    
   public function setStamp_description($stamp_description) {
-
     $this->stamp_description = $stamp_description;
   }    
 
@@ -130,8 +124,8 @@ class Stamp
   }    
 
    /**
-   * Mutateur de la propriété user_id 
-   * @param int $user_id
+   * Mutateur de la propriété stamp_date 
+   * @param int $stamp_date
    * @return $this
    */    
   public function setStamp_date($stamp_date) {
@@ -141,13 +135,13 @@ class Stamp
     
     if($stamp_date != null){
       
-    
       if( $stamp_date < 1840 || $stamp_date > $currentDate){
         $this->erreurs['stamp_date'] = "Doit être 1840 et ".$currentDate;
       }
     } 
       $this->stamp_date = $stamp_date; 
   }   
+
 
    /**
    * Mutateur de la propriété stamp_certified 
@@ -202,15 +196,16 @@ class Stamp
     $this->stamp_image_id = $stamp_image_id; 
   }   
 
+
    /**
    * Mutateur de la propriété stamp_condition_id 
    * @param int $stamp_condition_id
    * @return $this
    */    
   public function setStamp_condition_id($stamp_condition_id) {
-   
     $this->stamp_condition_id = $stamp_condition_id; 
   }   
+
 
    /**
    * Mutateur de la propriété stamp_rareness_id 
@@ -218,9 +213,9 @@ class Stamp
    * @return $this
    */    
   public function setStamp_rareness_id($stamp_rareness_id) {
- 
     $this->stamp_rareness_id = $stamp_rareness_id; 
   }   
+
 
    /**
    * Mutateur de la propriété stamp_auction_id 
@@ -228,10 +223,7 @@ class Stamp
    * @return $this
    */    
   public function setStamp_auction_id($stamp_auction_id) {
-   
     $this->stamp_auction_id = $stamp_auction_id; 
   }   
-
-
 
 }

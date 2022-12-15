@@ -10,8 +10,6 @@ class Image
   private $image_name;
   private $image_link;
  
-
-
   private $erreurs = array();
 
   /**
@@ -36,8 +34,8 @@ class Image
   }
 
   // Getters explicites nécessaires au moteur de templates TWIG
-  public function getImage_id()       { return $this->image_id; }
-  public function getImage_name()       { return $this->image_name; }
+  public function getImage_id()   { return $this->image_id; }
+  public function getImage_name() { return $this->image_name; }
   public function getImage_link() { return $this->image_link; }
  
   
@@ -52,32 +50,29 @@ class Image
   }
 
   /**
-   * Mutateur de la propriété user_id 
-   * @param int $user_id
+   * Mutateur de la propriété image_id 
+   * @param int $image_id
    * @return $this
    */    
   public function setImage_id($image_id) {
-    
     $this->image_id = $image_id; 
   }    
 
   /**
-   * Mutateur de la propriété user_id 
-   * @param int $user_id
+   * Mutateur de la propriété image_name 
+   * @param int $image_name
    * @return $this
    */    
   public function setImage_name($image_name) {
-    
     $this->image_name = $image_name; 
   }  
 
  /**
-   * Mutateur de la propriété stamp_name 
-   * @param int $stamp_name
+   * Mutateur de la propriété image_link 
+   * @param int $image_link
    * @return $this
    */    
   public function setImage_link($image_link) {
-
     unset($this->erreurs['image_link']);
 
     if (!$image_link) {

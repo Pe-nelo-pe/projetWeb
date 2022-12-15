@@ -15,9 +15,6 @@ class Auction
   private $auction_user_id;
   private $auction_status_id;
 
-
-
-
   private $erreurs = array();
 
    
@@ -81,15 +78,12 @@ class Auction
   public function setAuction_name($auction_name) {
     unset($this->erreurs['auction_name']);
 
-     $auction_name = trim($auction_name);
-  //  $regex = "/[^@!*\\+\\=?]+/i";
+    $auction_name = trim($auction_name);
 
-     if (!$auction_name) {
+    if (!$auction_name) {
        $this->erreurs['auction_name'] = "Champs obligatoire.";
     } 
-  //else if (!preg_match($regex, $auction_name)) {
-  //     $this->erreurs['auction_name'] = "Ne doit contenir les symboles suivants: @ ! * + = ?";
-  //   }
+  
     $this->auction_name = ucwords(strtolower($auction_name));
     $this->auction_name = $auction_name; 
     return $this;
@@ -104,7 +98,7 @@ class Auction
   public function setAuction_description($auction_description) {
     unset($this->erreurs['auction_description']);
 
-     if (!$auction_description) {
+    if (!$auction_description) {
       $this->erreurs['auction_description'] = "Champs obligatoire.";
     }
     $this->auction_description = $auction_description; 

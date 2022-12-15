@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Classe Contrôleur des requêtes de l'application admin
+ * Classe Contrôleur des requêtes des utilisateurs et leur session
  */
  
 class Session extends Routeur {
@@ -38,8 +38,9 @@ class Session extends Routeur {
     $this->oRequetesSQL = new RequetesSQL;
   }
 
+
   /**
-   * Gérer l'interface d'administration 
+   * Gérer l'interface de la session
    */  
   public function gestionConnexion() {
  
@@ -55,7 +56,7 @@ class Session extends Routeur {
         throw new Exception("L'entité $this->entite n'existe pas.");
       }
  
-      $this->connecter();
+      //$this->connecter();
     }
 
 
@@ -71,7 +72,8 @@ class Session extends Routeur {
         $_SESSION['oUser'] = new User($user);
         $this->oUser = $_SESSION['oUser'];
 
-        $this->vAccount($this->oUser); 
+        $this->vAccount(); 
+        exit;
       } else {
 
         $messageErreurConnexion = "Courriel ou mot de passe incorrect.";
@@ -99,8 +101,8 @@ class Session extends Routeur {
   }
 
 
-    /**
-   * Lister les users
+  /**
+   * Redirection après l'inscription d'une nouvel utilisateur
    */
   public function afterSign() {
 
@@ -109,7 +111,7 @@ class Session extends Routeur {
     }
 
 
-    (new Vue)->generer('welcomeUser',
+    (new Vue)->generer('vNewUser',
             array(
               'oUser'               => $this->oUser,
               'messageRetourAction' => $this->messageRetourAction
@@ -118,7 +120,9 @@ class Session extends Routeur {
   }
 
 
-  
+  /**
+   * Gestion du compte
+   */
   public function vAccount() {
     if (isset($_SESSION['oUser'])) {
      $user = $this->oUser = $_SESSION['oUser'];
@@ -132,6 +136,7 @@ class Session extends Routeur {
           'gabarit-frontend');
     }
   }
+
 
   /**
    * Ajouter un user
@@ -153,13 +158,9 @@ class Session extends Routeur {
           'user_password' => $oUser->user_password,
           'user_address' => $oUser->user_address,
           'user_city' => $oUser->user_city,
-          'user_zipCode' => $oUser->user_zipCode,
+          'user_zipCode' => $oUser->user_zipCode 
         ]);
-        if ( $user_id > 0) { 
-          $this->messageRetourAction = "Ajout du membre # $user_id effectuée.";
-        } else {
-          $this->messageRetourAction = "Ajout du membre non effectué.";
-        }
+       
         $this->afterSign(); 
        exit;
       }
@@ -176,18 +177,18 @@ class Session extends Routeur {
   }
 
   /**
-   * Modifier un user identifié par sa clé dans la propriété user_id
+   * Modifier un user
    */
   public function updateUser() {
     if (isset($_SESSION['oUser'])) {
      $users = $this->oUser = $_SESSION['oUser'];
     }
     if (count($_POST) !== 0) {
-      //echo "id " .$users->user_id;
+
       $user = $_POST;
       $oUser = new User($user);
       $erreurs = $oUser->erreurs;
-      //print_r($oUser);
+
       if (count($erreurs) === 0) {
         
         if($this->oRequetesSQL->updateUser([
@@ -200,15 +201,20 @@ class Session extends Routeur {
           'user_zipCode'   => $oUser->user_zipCode,
         ])) { 
           $this->messageRetourAction = "Modification effectuée.";
-          echo $oUser->user_firstName;
-          print_r($user);
-          $_SESSION['oUser']['user_firstName'] = $oUser->user_firstName;
+         (new Vue)->generer('vAccount',
+            array(
+              // 'oUser'   => $this->oUser,
+              'titre'   => "Modification du compte",
+              'user'    => $users,
+              'erreurs' => $erreurs,
+              'messageRetourAction' => $this->messageRetourAction
+            ),
+            'gabarit-frontend');  
         } else {
 
           $this->messageRetourAction = "Modification non effectuée.";
         }
-        //$this->vAccount();
-        //exit;
+
       }
 
     } else {

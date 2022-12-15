@@ -41,7 +41,7 @@ class Bid
   public function getBid_id()         { return $this->bid_id; }
   public function getBid_auction_id() { return $this->bid_auction_id; }
   public function getBid_user_id()    { return $this->bid_user_id; }
-  public function getBid_amount()      { return $this->bid_amount; }
+  public function getBid_amount()     { return $this->bid_amount; }
   
   public function getErreurs()        { return $this->erreurs; }
   
@@ -69,7 +69,6 @@ class Bid
     * @return $this
     */    
   public function setBid_auction_id($bid_auction_id) {
-   // echo "bla bla bla ".$bid_auction_id;
     $this->bid_auction_id = $bid_auction_id;
     return $this;
   } 
@@ -91,8 +90,9 @@ class Bid
    */    
   public function setBid_amount($bid_amount) {
     unset($this->erreurs['bid_amount']);
+
     $id = $this->bid_auction_id ;
-   
+
     $oRequetesSQL = new RequetesSQL;
     $maxValue = $oRequetesSQL->getMaxBid($id);
     $minValue = $oRequetesSQL->getMinAuction($id);
@@ -102,8 +102,7 @@ class Bid
 
     if($bid_amount <= $maxValue){
       $this->erreurs['bid_amount'] = "La nouvelle mise doit être plus haute que la dernière mise faite";
-    }
-    if($bid_amount < $minValue){
+    } else if($bid_amount < $minValue){
       $this->erreurs['bid_amount'] = "La nouvelle mise doit être plus haute que la mise minimale";
 
     }

@@ -10,8 +10,7 @@ class Frontend extends Routeur {
 
   
   /**
-   * Constructeur qui initialise des propriétés à partir du query string
-   * et la propriété oRequetesSQL déclarée dans la classe Routeur
+   * Constructeur qui initialise des propriétés de la classe
    * 
    */
   public function __construct() {
@@ -19,7 +18,7 @@ class Frontend extends Routeur {
   }
 
 
-    /**
+  /**
    * Affichage accueil
    * 
    */  

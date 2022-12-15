@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Classe Contrôleur des requêtes de l'application admin
+ * Classe Contrôleur des requêtes pour les enchères
  */
 
 class Auctions extends Routeur {
@@ -41,6 +41,9 @@ class Auctions extends Routeur {
   }
 
 
+  /**
+   * Gérer l'interface d'auction 
+   */ 
   public function gererAuction() {
     if (isset($_SESSION['oUser'])) {
       $this->oUser = $_SESSION['oUser'];
@@ -65,8 +68,6 @@ class Auctions extends Routeur {
   }
  
 
-
-
   /**
    * Lister les enchères d'un utilisateur
    */
@@ -88,7 +89,7 @@ class Auctions extends Routeur {
   }
 
 
-    /**
+  /**
    * Lister les enchères du catalogue
    */
   public function catalogueAuctions() {
@@ -106,7 +107,6 @@ class Auctions extends Routeur {
             ),
             'gabarit-frontend');
   }
-
 
 
   /**
@@ -235,7 +235,7 @@ class Auctions extends Routeur {
         }
       }
  
-    (new Vue)->generer('vAuctionAdd',
+    (new Vue)->generer('vAddAuction',
             array(
               'titre'       => 'Ajouter une enchère',
               'user'        => $user,
@@ -253,7 +253,7 @@ class Auctions extends Routeur {
      
   
   /**
-   * Modifier une enchère par sa clé dans la propriété auction_id
+   * Modifier une enchère 
    */
   public function updateAuction() {
     if (isset($_SESSION['oUser'])) {
@@ -340,7 +340,7 @@ class Auctions extends Routeur {
 
 
   /**
-   * Supprimer une enchère par son id
+   * Supprimer une enchère 
    */
   public function deleteAuction() {
 
@@ -377,6 +377,7 @@ class Auctions extends Routeur {
             ),
             'gabarit-frontend');
   }
+
 
 
   /*
